@@ -1,0 +1,59 @@
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { createEmbed } = require('../utils/embed');
+const warns = require('../utils/WarningManager');
+const logger = require('../utils/logger');
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('warn')
+        .setDescription('Issues a formal warning to a user.')
+        .addUserOption(opt => 
+            opt.setName('target')
+                .setDescription('The user to warn')
+                .setRequired(true))
+        .addStringOption(opt => 
+            opt.setName('reason')
+                .setDescription('Reason for the warning')
+                .setRequired(true))
+        .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
+    async execute(interaction) {
+        const target = interaction.options.getUser('target');
+        const reason = interaction.options.getString('reason');
+
+        if (target.bot) {
+            return interaction.reply({ content: 'You cannot warn bots!', ephemeral: true });
+        }
+        if (target.id === interaction.user.id) {
+            return interaction.reply({ content: 'You cannot warn yourself!', ephemeral: true });
+        }
+
+        warns.addWarning(interaction.guild.id, target.id, interaction.user.id, reason);
+        const count = warns.getWarnings(interaction.guild.id, target.id).length;
+
+        logger.info(`${interaction.user.tag} warned ${target.tag} in ${interaction.guild.name} (Strike ${count})`);
+
+        // Try to DM the user
+        try {
+            await target.send({
+                embeds: [createEmbed({
+                    title: `⚠️ You received a warning in ${interaction.guild.name}`,
+                    description: `**Reason:** ${reason}\n\n*This is warning #${count} on your record.*`,
+                    color: '#E67E22'
+                })]
+            });
+        } catch (err) {
+            // Couldn't DM
+        }
+
+        const embed = createEmbed({
+            title: '⚠️ User Warned',
+            description: `Successfully warned <@${target.id}>.\nThey now have **${count}** warning(s).`,
+            fields: [
+                { name: 'Reason', value: reason, inline: false }
+            ],
+            color: '#E67E22'
+        });
+
+        await interaction.reply({ embeds: [embed] });
+    },
+};
