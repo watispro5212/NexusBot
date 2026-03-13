@@ -23,7 +23,7 @@ module.exports = {
         .setDescription('Execute a gig to earn Nexus Credits (1 hour cooldown).'),
     async execute(interaction) {
         const userId = interaction.user.id;
-        const data = await economy.getUser(userId);
+        const data = await economy.getUser(userId, interaction.guild.id);
 
         const now = Date.now();
         const last = data.lastWork || 0;

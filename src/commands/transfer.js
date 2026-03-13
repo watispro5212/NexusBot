@@ -35,7 +35,7 @@ module.exports = {
             });
         }
 
-        const senderData = economy.getUser(senderId);
+        const senderData = await economy.getUser(senderId, interaction.guild.id);
 
         if (senderData.wallet < amount) {
             return interaction.reply({
@@ -48,7 +48,7 @@ module.exports = {
             });
         }
 
-        const targetData = economy.getUser(targetId);
+        const targetData = await economy.getUser(targetId, interaction.guild.id);
 
         // Perform the transfer
         senderData.wallet -= amount;

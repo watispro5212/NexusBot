@@ -34,7 +34,7 @@ module.exports = {
             return interaction.reply({ content: 'Bots don\'t earn XP!', ephemeral: true });
         }
 
-        const data = economy.getUser(target.id);
+        const data = await economy.getUser(target.id, interaction.guild.id);
         const requiredXp = getXpRequirement(data.level);
 
         const embed = createEmbed({

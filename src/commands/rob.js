@@ -26,7 +26,7 @@ module.exports = {
             });
         }
 
-        const robberData = await economy.getUser(robberId);
+        const robberData = await economy.getUser(robberId, interaction.guild.id);
         
         // Cooldown Check
         const now = Date.now();
@@ -56,7 +56,7 @@ module.exports = {
             });
         }
 
-        const targetData = await economy.getUser(targetId);
+        const targetData = await economy.getUser(targetId, interaction.guild.id);
 
         if (targetData.wallet < 100) {
             return interaction.reply({

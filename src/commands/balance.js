@@ -18,7 +18,7 @@ module.exports = {
             return interaction.reply({ content: 'Scanning failed. Artificial constructs do not possess currency.', ephemeral: true });
         }
 
-        const data = await economy.getUser(target.id);
+        const data = await economy.getUser(target.id, interaction.guild.id);
         const netWorth = data.wallet + data.bank;
 
         const embed = createEmbed({

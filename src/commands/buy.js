@@ -24,7 +24,7 @@ module.exports = {
         }
 
         const userId = interaction.user.id;
-        const data = economy.getUser(userId);
+        const data = await economy.getUser(userId, interaction.guild.id);
 
         if (data.wallet < item.price) {
             return interaction.reply({

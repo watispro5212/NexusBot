@@ -64,7 +64,7 @@ module.exports = {
     async execute(interaction) {
         const bet = interaction.options.getInteger('bet');
         const userId = interaction.user.id;
-        let data = economy.getUser(userId);
+        let data = await economy.getUser(userId, interaction.guild.id);
 
         if (data.wallet < bet) {
             return interaction.reply({

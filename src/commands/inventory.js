@@ -19,7 +19,7 @@ module.exports = {
             return interaction.reply({ content: 'Bots do not have inventories!', ephemeral: true });
         }
 
-        const data = economy.getUser(target.id);
+        const data = await economy.getUser(target.id, interaction.guild.id);
         
         if (!data.inventory || data.inventory.length === 0) {
             const emptyEmbed = createEmbed({

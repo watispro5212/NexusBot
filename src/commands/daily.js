@@ -11,7 +11,7 @@ module.exports = {
         .setDescription('Receive your daily Nexus Credit allocation.'),
     async execute(interaction) {
         const userId = interaction.user.id;
-        const data = await economy.getUser(userId);
+        const data = await economy.getUser(userId, interaction.guild.id);
 
         const now = Date.now();
         const last = data.lastDaily || 0;
