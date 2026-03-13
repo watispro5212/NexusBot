@@ -5,31 +5,31 @@ const economy = require('../utils/EconomyManager');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('balance')
-        .setDescription('Check your current account balance.')
+        .setDescription('Scan current credit reserves.')
         .addUserOption(opt => 
             opt.setName('target')
-                .setDescription('Check someone else\'s balance')
+                .setDescription('Scan another user\'s reserves')
                 .setRequired(false)
         ),
     async execute(interaction) {
         const target = interaction.options.getUser('target') || interaction.user;
         
         if (target.bot) {
-            return interaction.reply({ content: 'Bots do not have bank accounts!', ephemeral: true });
+            return interaction.reply({ content: 'Scanning failed. Artificial constructs do not possess currency.', ephemeral: true });
         }
 
-        const data = economy.getUser(target.id);
+        const data = await economy.getUser(target.id);
         const netWorth = data.wallet + data.bank;
 
         const embed = createEmbed({
-            title: `💰 ${target.username}'s Account`,
+            title: `💳 Nexus Account: ${target.username}`,
             thumbnail: target.displayAvatarURL(),
             fields: [
-                { name: '👛 Wallet', value: `\`${data.wallet.toLocaleString()} Credits\``, inline: true },
-                { name: '🏦 Bank', value: `\`${data.bank.toLocaleString()} / ${data.bankCapacity.toLocaleString()} Credits\``, inline: true },
-                { name: '🌐 Net Worth', value: `\`${netWorth.toLocaleString()} Credits\``, inline: false },
+                { name: '👛 Local Wallet', value: `\`${data.wallet.toLocaleString()} Credits\``, inline: true },
+                { name: '🏦 Nexus Vault', value: `\`${data.bank.toLocaleString()} / ${data.bankCapacity.toLocaleString()} Credits\``, inline: true },
+                { name: '🌐 Total Net Worth', value: `\`${netWorth.toLocaleString()} Credits\``, inline: false },
             ],
-            color: '#F1C40F'
+            color: '#00FFCC'
         });
 
         await interaction.reply({ embeds: [embed] });

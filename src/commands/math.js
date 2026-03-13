@@ -32,7 +32,7 @@ module.exports = {
                     { name: 'Expression', value: `\`${sanitized}\``, inline: false },
                     { name: 'Result', value: `**${result}**`, inline: false }
                 ],
-                color: '#5865F2'
+                color: '#00FFCC'
             });
 
             await interaction.reply({ embeds: [embed] });

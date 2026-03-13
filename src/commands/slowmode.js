@@ -29,7 +29,7 @@ module.exports = {
             const embed = createEmbed({
                 title: '⏱️ Slowmode Updated',
                 description: desc,
-                color: '#5865F2'
+                color: '#00FFCC'
             });
 
             await interaction.reply({ embeds: [embed] });

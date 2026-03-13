@@ -36,16 +36,16 @@ module.exports = {
         const question = interaction.options.getString('question');
         const response = RESPONSES[Math.floor(Math.random() * RESPONSES.length)];
 
-        let color = '#5865F2'; // Base Blurple
+        let color = '#00FFCC'; // Base Blurple
         
         // Color code based on typical 8-ball answers (positive/neutral/negative)
         const lowerRes = response.toLowerCase();
         if (lowerRes.includes('yes') || lowerRes.includes('certain') || lowerRes.includes('good') || lowerRes.includes('doubt')) {
-            color = '#57F287'; // Green
+            color = '#00FFCC'; // Green
         } else if (lowerRes.includes('no') || lowerRes.includes('doubtful') || lowerRes.includes('not')) {
-            color = '#ED4245'; // Red
+            color = '#FF4B2B'; // Red
         } else {
-            color = '#FEE75C'; // Yellow (neutral/try again)
+            color = '#FFCC00'; // Yellow (neutral/try again)
         }
 
         const embed = createEmbed({

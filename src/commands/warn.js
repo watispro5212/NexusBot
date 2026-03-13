@@ -38,7 +38,7 @@ module.exports = {
                 embeds: [createEmbed({
                     title: `⚠️ You received a warning in ${interaction.guild.name}`,
                     description: `**Reason:** ${reason}\n\n*This is warning #${count} on your record.*`,
-                    color: '#E67E22'
+                    color: '#FFCC00'
                 })]
             });
         } catch (err) {
@@ -51,7 +51,7 @@ module.exports = {
             fields: [
                 { name: 'Reason', value: reason, inline: false }
             ],
-            color: '#E67E22'
+            color: '#FFCC00'
         });
 
         await interaction.reply({ embeds: [embed] });

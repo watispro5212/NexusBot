@@ -23,7 +23,7 @@ module.exports = {
             const embed = createEmbed({
                 title: data.title,
                 url: data.postLink,
-                color: '#9B59B6'
+                color: '#D800FF'
             }).setImage(data.url)
               .setFooter({ text: `👍 ${data.ups} | r/${data.subreddit}` });
 

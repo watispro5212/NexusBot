@@ -155,7 +155,7 @@ module.exports = {
                 title: `${categoryData.emoji} ${categoryData.label}`,
                 description: `*${categoryData.description}*`,
                 fields: fields,
-                color: '#5865F2',
+                color: '#00FFCC',
                 footer: `Showing ${fields.length} commands`
             });
 

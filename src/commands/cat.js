@@ -16,7 +16,7 @@ module.exports = {
 
             const embed = createEmbed({
                 title: '🐱 Meow',
-                color: '#E67E22'
+                color: '#FFCC00'
             }).setImage(imageUrl);
 
             await interaction.editReply({ embeds: [embed] });

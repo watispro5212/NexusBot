@@ -23,7 +23,7 @@ module.exports = {
         const embed = createEmbed({
             title: '😂 Random Joke',
             description: joke,
-            color: '#FEE75C'
+            color: '#FFCC00'
         });
         await interaction.reply({ embeds: [embed] });
     },

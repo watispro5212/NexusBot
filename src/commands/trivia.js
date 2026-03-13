@@ -43,7 +43,7 @@ module.exports = {
         const embed = createEmbed({
             title: '🧠 Trivia Time!',
             description: `**${questionObj.q}**\n\n*You have 15 seconds to answer.*`,
-            color: '#00B4D8'
+            color: '#00FFCC'
         });
 
         const reply = await interaction.reply({ 
@@ -68,7 +68,7 @@ module.exports = {
             const resultEmbed = createEmbed({
                 title: isCorrect ? '✅ Correct!' : '❌ Incorrect!',
                 description: `**${questionObj.q}**\n\nYou chose: \`${chosenAnswer}\`\nCorrect Answer: \`${questionObj.a}\``,
-                color: isCorrect ? '#57F287' : '#ED4245'
+                color: isCorrect ? '#00FFCC' : '#FF4B2B'
             });
 
             await i.update({ embeds: [resultEmbed], components: [] });
@@ -80,7 +80,7 @@ module.exports = {
                 const timeoutEmbed = createEmbed({
                     title: '⏰ Time\'s Up!',
                     description: `**${questionObj.q}**\n\nCorrect Answer: \`${questionObj.a}\``,
-                    color: '#95A5A6'
+                    color: '#A3B1C6'
                 });
                 await interaction.editReply({ embeds: [timeoutEmbed], components: [] }).catch(() => null);
             }

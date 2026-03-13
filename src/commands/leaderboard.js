@@ -16,7 +16,7 @@ module.exports = {
                 embeds: [createEmbed({
                     title: '🏆 Economy Leaderboard',
                     description: 'No one has any money yet!',
-                    color: '#5865F2'
+                    color: '#00FFCC'
                 })]
             });
         }

@@ -54,7 +54,7 @@ module.exports = {
 
         let multiplier = 0;
         let winMessage = 'Better luck next time!';
-        let color = '#ED4245';
+        let color = '#FF4B2B';
 
         const isThreeOfAKind = results[0] === results[1] && results[1] === results[2];
         const isTwoOfAKind = results[0] === results[1] || results[1] === results[2] || results[0] === results[2];
@@ -67,16 +67,16 @@ module.exports = {
             } else if (results[0] === '💎') {
                 multiplier = 10;
                 winMessage = '💎 **DIAMOND WIN!** 💎\n*You matched 3 💎!*';
-                color = '#3498DB';
+                color = '#00FFCC';
             } else {
                 multiplier = 3;
                 winMessage = '**Winner!**\n*You matched 3 of a kind!*';
-                color = '#57F287';
+                color = '#00FFCC';
             }
         } else if (isTwoOfAKind) {
             multiplier = 1.5;
             winMessage = '**Small Win!**\n*You matched 2 of a kind!*';
-            color = '#E67E22';
+            color = '#FFCC00';
         }
 
         const winnings = Math.floor(bet * multiplier);

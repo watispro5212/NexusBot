@@ -8,10 +8,10 @@ const COOLDOWN_MS = 24 * 60 * 60 * 1000;
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('daily')
-        .setDescription('Claim your daily reward!'),
+        .setDescription('Receive your daily Nexus Credit allocation.'),
     async execute(interaction) {
         const userId = interaction.user.id;
-        const data = economy.getUser(userId);
+        const data = await economy.getUser(userId);
 
         const now = Date.now();
         const last = data.lastDaily || 0;
@@ -24,9 +24,9 @@ module.exports = {
 
             return interaction.reply({ 
                 embeds: [createEmbed({
-                    title: '⏳ Cooldown Active',
-                    description: `You already claimed your daily reward!\nCome back in **${hours}h ${minutes}m**.`,
-                    color: '#ED4245'
+                    title: '⏳ Allocation Pending',
+                    description: `Your daily Nexus allocation has already been dispersed.\nNext drop available in **${hours}h ${minutes}m**.`,
+                    color: '#FF4B2B'
                 })],
                 ephemeral: true 
             });
@@ -42,15 +42,15 @@ module.exports = {
             data.dailyStreak = 1;
         }
 
-        economy.saveUser(userId, data);
+        await data.save();
 
         const embed = createEmbed({
-            title: '🎁 Daily Reward Claimed!',
-            description: `You received **${DAILY_REWARD.toLocaleString()} Credits**!\nYour new wallet balance is **${data.wallet.toLocaleString()} Credits**.`,
+            title: '🎁 Allocation Confirmed',
+            description: `You received **${DAILY_REWARD.toLocaleString()} Credits** from the Nexus.\nCurrent Local Wallet: **${data.wallet.toLocaleString()} Credits**.`,
             fields: [
-                { name: '🔥 Current Streak', value: `${data.dailyStreak} day(s) in a row`, inline: true }
+                { name: '🔥 System Streak', value: `${data.dailyStreak} consecutive cycle(s)`, inline: true }
             ],
-            color: '#57F287'
+            color: '#00FFCC'
         });
 
         await interaction.reply({ embeds: [embed] });

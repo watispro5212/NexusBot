@@ -23,7 +23,7 @@ module.exports = {
         const embed = createEmbed({
             title: '📜 Random Quote',
             description: `*"${quote.split(' – ')[0]}"*\n\n— **${quote.split(' – ')[1]}**`,
-            color: '#5865F2'
+            color: '#00FFCC'
         });
         await interaction.reply({ embeds: [embed] });
     },

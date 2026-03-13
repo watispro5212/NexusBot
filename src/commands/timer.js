@@ -24,7 +24,7 @@ module.exports = {
         const embed = createEmbed({
             title: '⏱️ Timer Set',
             description: `I will remind you in **${minutes} minute(s)** about:\n> *${reminder}*`,
-            color: '#57F287'
+            color: '#00FFCC'
         });
 
         await interaction.reply({ embeds: [embed] });
@@ -34,7 +34,7 @@ module.exports = {
             const upEmbed = createEmbed({
                 title: '⏰ Timer Finished!',
                 description: `> *${reminder}*`,
-                color: '#FEE75C' // Yellow alert
+                color: '#FFCC00' // Yellow alert
             });
 
             try {

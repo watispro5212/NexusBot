@@ -20,7 +20,7 @@ module.exports = {
             title: '🛒 The Item Shop',
             description: 'Spend your hard-earned credits on these luxurious items!',
             fields: fields,
-            color: '#9B59B6'
+            color: '#D800FF'
         });
 
         await interaction.reply({ embeds: [embed] });

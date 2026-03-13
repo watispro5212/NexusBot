@@ -7,23 +7,23 @@ const MIN_PAY = 150;
 const MAX_PAY = 400;
 
 const JOBS = [
-    'hacked a mainframe',
-    'delivered pizzas',
-    'mined some crypto',
-    'fixed a broken spaceship',
-    'sold custom Discord bots',
-    'streamed some games',
-    'invested in the stock market',
-    'walked the neighbor\'s dogs'
+    'sliced into a corporate mainframe',
+    'delivered encrypted data drives',
+    'mined rare Nexus cryptocurrency',
+    'patched a faulty AI core',
+    'sold custom terminal scripts',
+    'recalibrated the orbital sensors',
+    'invested in black market hardware',
+    'intercepted an enemy transmission'
 ];
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('work')
-        .setDescription('Work a shift to earn some credits (1 hour cooldown).'),
+        .setDescription('Execute a gig to earn Nexus Credits (1 hour cooldown).'),
     async execute(interaction) {
         const userId = interaction.user.id;
-        const data = economy.getUser(userId);
+        const data = await economy.getUser(userId);
 
         const now = Date.now();
         const last = data.lastWork || 0;
@@ -33,9 +33,9 @@ module.exports = {
             const minutes = Math.ceil((COOLDOWN_MS - diff) / 60000);
             return interaction.reply({ 
                 embeds: [createEmbed({
-                    title: '⏳ You are too tired...',
-                    description: `You must rest for **${minutes} more minutes** before working again.`,
-                    color: '#ED4245'
+                    title: '⏳ System Overload',
+                    description: `Your neural link needs to cool down. Rest for **${minutes} more minutes** before accepting a new gig.`,
+                    color: '#FF4B2B'
                 })],
                 ephemeral: true 
             });
@@ -46,12 +46,12 @@ module.exports = {
 
         data.wallet += payout;
         data.lastWork = now;
-        economy.saveUser(userId, data);
+        await data.save();
 
         const embed = createEmbed({
-            title: '💼 Shift Complete!',
-            description: `You ${jobDesc} and earned **${payout} Credits**!\nYour new wallet balance is **${data.wallet.toLocaleString()} Credits**.`,
-            color: '#3498DB'
+            title: '💼 Gig Complete',
+            description: `You ${jobDesc} and were compensated **${payout} Credits**.\nCurrent Local Wallet: **${data.wallet.toLocaleString()} Credits**.`,
+            color: '#00FFCC'
         });
 
         await interaction.reply({ embeds: [embed] });

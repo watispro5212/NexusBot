@@ -9,10 +9,10 @@ const FINE_AMOUNT = 300;
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('rob')
-        .setDescription('Risk it all and attempt to steal from another user\'s wallet.')
+        .setDescription('Execute a cyber-heist on another user\'s local wallet.')
         .addUserOption(option => 
             option.setName('target')
-                .setDescription('The user you want to rob')
+                .setDescription('The user to target')
                 .setRequired(true)),
     async execute(interaction) {
         const targetUser = interaction.options.getUser('target');
@@ -21,12 +21,12 @@ module.exports = {
 
         if (targetUser.bot || targetId === robberId) {
             return interaction.reply({ 
-                content: 'Invalid target.', 
+                content: 'Invalid target parameters.', 
                 ephemeral: true 
             });
         }
 
-        const robberData = economy.getUser(robberId);
+        const robberData = await economy.getUser(robberId);
         
         // Cooldown Check
         const now = Date.now();
@@ -37,9 +37,9 @@ module.exports = {
             const minutes = Math.ceil((ROB_COOLDOWN_MS - diff) / 60000);
             return interaction.reply({
                 embeds: [createEmbed({
-                    title: '⏳ Lay Low...',
-                    description: `The cops are looking for you. Wait **${minutes} minutes** before robbing again.`,
-                    color: 0xED4245
+                    title: '⏳ Heat Level High',
+                    description: `Nexus Security is actively scanning for your signature. Lay low for **${minutes} minutes** before attempting another heist.`,
+                    color: '#FF4B2B'
                 })],
                 ephemeral: true
             });
@@ -48,22 +48,22 @@ module.exports = {
         if (robberData.wallet < FINE_AMOUNT) {
             return interaction.reply({
                 embeds: [createEmbed({
-                    title: '❌ Too Poor',
-                    description: `You need at least **${FINE_AMOUNT} Credits** in your wallet to pay the fine if you get caught.`,
-                    color: 0xED4245
+                    title: '❌ Insufficient Funds',
+                    description: `You need at least **${FINE_AMOUNT} Credits** in your local wallet to cover potential Nexus Security fines.`,
+                    color: '#FF4B2B'
                 })],
                 ephemeral: true
             });
         }
 
-        const targetData = economy.getUser(targetId);
+        const targetData = await economy.getUser(targetId);
 
         if (targetData.wallet < 100) {
             return interaction.reply({
                 embeds: [createEmbed({
-                    title: '❌ Not Worth It',
-                    description: `<@${targetId}> has less than 100 Credits in their wallet. Leave them alone.`,
-                    color: 0xED4245
+                    title: '❌ Low Value Target',
+                    description: `Target <@${targetId}> has less than 100 Credits in their wallet. Not worth the network bandwidth.`,
+                    color: '#FF4B2B'
                 })],
                 ephemeral: true
             });
@@ -75,13 +75,13 @@ module.exports = {
         if (Math.random() > BASE_SUCCESS_CHANCE) {
             // FAILED
             robberData.wallet -= FINE_AMOUNT;
-            economy.saveUser(robberId, robberData);
+            await robberData.save();
 
             return interaction.reply({
                 embeds: [createEmbed({
-                    title: '🚨 Busted!',
-                    description: `You were caught trying to steal from <@${targetId}> and had to pay a fine of **${FINE_AMOUNT} Credits**.\n\nYour wallet: **${robberData.wallet.toLocaleString()}**`,
-                    color: 0xED4245,
+                    title: '🚨 Intrusion Detected!',
+                    description: `Nexus Security blocked your firewall breach on <@${targetId}>. You were fined **${FINE_AMOUNT} Credits**.\n\nCurrent Wallet: **${robberData.wallet.toLocaleString()}**`,
+                    color: '#FF4B2B',
                     thumbnail: 'https://cdn4.iconfinder.com/data/icons/basic-ui-color/512/siren-512.png'
                 })]
             });
@@ -93,14 +93,14 @@ module.exports = {
             robberData.wallet += stolen;
             targetData.wallet -= stolen;
 
-            economy.saveUser(robberId, robberData);
-            economy.saveUser(targetId, targetData);
+            await robberData.save();
+            await targetData.save();
 
             return interaction.reply({
                 embeds: [createEmbed({
-                    title: '🥷 Heist Successful',
-                    description: `You successfully snuck away with **${stolen.toLocaleString()} Credits** from <@${targetId}>'s wallet!\n\nYour wallet: **${robberData.wallet.toLocaleString()}**`,
-                    color: 0x57F287,
+                    title: '🥷 Cyber-Heist Successful',
+                    description: `You successfully bypassed <@${targetId}>'s firewall and extracted **${stolen.toLocaleString()} Credits** from their wallet!\n\nCurrent Wallet: **${robberData.wallet.toLocaleString()}**`,
+                    color: '#00FFCC',
                     thumbnail: 'https://cdn1.iconfinder.com/data/icons/ninja-14/512/Ninja-512.png'
                 })]
             });

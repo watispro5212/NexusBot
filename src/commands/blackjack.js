@@ -123,12 +123,12 @@ module.exports = {
             data.wallet += winnings;
             economy.saveUser(userId, data);
             return interaction.reply({ 
-                embeds: [buildEmbed('**BLACKJACK!** You win!', '#57F287').addFields({ name: 'Payout', value: `+${winnings.toLocaleString()}` })] 
+                embeds: [buildEmbed('**BLACKJACK!** You win!', '#00FFCC').addFields({ name: 'Payout', value: `+${winnings.toLocaleString()}` })] 
             });
         }
 
         const reply = await interaction.reply({ 
-            embeds: [buildEmbed('Game in progress. Your turn.', '#5865F2')], 
+            embeds: [buildEmbed('Game in progress. Your turn.', '#00FFCC')], 
             components: [buttons], 
             fetchReply: true 
         });
@@ -146,13 +146,13 @@ module.exports = {
 
                 if (playerValue > 21) {
                     // BUST
-                    await i.update({ embeds: [buildEmbed('**BUST!** You went over 21. Dealer wins.', '#ED4245')], components: [] });
+                    await i.update({ embeds: [buildEmbed('**BUST!** You went over 21. Dealer wins.', '#FF4B2B')], components: [] });
                     collector.stop('bust');
                 } else if (playerValue === 21) {
                     // Auto-stand if 21
                     await handleDealerTurn(i);
                 } else {
-                    await i.update({ embeds: [buildEmbed('Game in progress. Your turn.', '#5865F2')], components: [buttons] });
+                    await i.update({ embeds: [buildEmbed('Game in progress. Your turn.', '#00FFCC')], components: [buttons] });
                 }
             } else if (i.customId === 'bj_stand') {
                 await handleDealerTurn(i);
@@ -167,16 +167,16 @@ module.exports = {
             }
 
             let resultMsg = '';
-            let color = '#ED4245';
+            let color = '#FF4B2B';
             let winnings = 0;
 
             if (dealerValue > 21 || playerValue > dealerValue) {
                 resultMsg = '**You Win!**';
-                color = '#57F287';
+                color = '#00FFCC';
                 winnings = bet * 2;
             } else if (dealerValue === playerValue) {
                 resultMsg = '**Push.** It\'s a tie. Bet returned.';
-                color = '#E67E22';
+                color = '#FFCC00';
                 winnings = bet;
             } else {
                 resultMsg = '**Dealer Wins.**';
@@ -197,7 +197,7 @@ module.exports = {
         collector.on('end', async (_, reason) => {
             if (reason === 'time') {
                 await interaction.editReply({ 
-                    embeds: [buildEmbed('**Timeout!** You took too long. Dealer takes the bet.', '#95A5A6')], 
+                    embeds: [buildEmbed('**Timeout!** You took too long. Dealer takes the bet.', '#A3B1C6')], 
                     components: [] 
                 }).catch(() => null);
             }

@@ -66,7 +66,7 @@ module.exports = {
         const embed = createEmbed({
             title: '🛍️ Purchase Successful!',
             description: `You have successfully purchased **${item.name}** for **${item.price.toLocaleString()} Credits**!\n\nYour new wallet balance is **${data.wallet.toLocaleString()} Credits**.`,
-            color: '#57F287'
+            color: '#00FFCC'
         });
 
         await interaction.reply({ embeds: [embed] });

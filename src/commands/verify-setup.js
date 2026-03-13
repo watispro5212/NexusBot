@@ -26,7 +26,7 @@ module.exports = {
         const embed = createEmbed({
             title: '🛂 Server Verification',
             description: `Welcome to **${interaction.guild.name}**!\n\nTo prove you are human and gain access to the rest of the server, please click the button below.`,
-            color: '#57F287',
+            color: '#00FFCC',
             thumbnail: interaction.guild.iconURL()
         });
 

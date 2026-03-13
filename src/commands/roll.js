@@ -18,7 +18,7 @@ module.exports = {
         const embed = createEmbed({
             title: `🎲 Rolled a d${sides}`,
             description: `You rolled a **${result}**!`,
-            color: '#00B4D8'
+            color: '#00FFCC'
         });
 
         await interaction.reply({ embeds: [embed] });

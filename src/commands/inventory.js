@@ -25,7 +25,7 @@ module.exports = {
             const emptyEmbed = createEmbed({
                 title: `🎒 ${target.username}'s Inventory`,
                 description: 'This inventory is completely empty!\n*Visit the `/shop` to buy items.*',
-                color: '#95A5A6'
+                color: '#A3B1C6'
             });
             return interaction.reply({ embeds: [emptyEmbed] });
         }
@@ -51,7 +51,7 @@ module.exports = {
             title: `🎒 ${target.username}'s Inventory`,
             thumbnail: target.displayAvatarURL(),
             description: description,
-            color: '#E67E22'
+            color: '#FFCC00'
         });
 
         await interaction.reply({ embeds: [embed] });

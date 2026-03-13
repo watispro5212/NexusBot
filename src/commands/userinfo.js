@@ -13,7 +13,7 @@ module.exports = {
         const targetUser = interaction.options.getUser('target') || interaction.user;
         const targetMember = await interaction.guild.members.fetch(targetUser.id).catch(() => null);
 
-        const embedColor = targetMember ? targetMember.displayHexColor : '#5865F2';
+        const embedColor = targetMember ? targetMember.displayHexColor : '#00FFCC';
         
         let rolesValue = 'User is not in the server.';
         if (targetMember) {
@@ -46,7 +46,7 @@ module.exports = {
         const embed = createEmbed({
             title: 'User Information',
             thumbnail: targetUser.displayAvatarURL({ dynamic: true, size: 256 }),
-            color: embedColor === '#000000' ? '#5865F2' : embedColor, // fallback if default role color
+            color: embedColor === '#000000' ? '#00FFCC' : embedColor, // fallback if default role color
             fields: embedFields
         });
 

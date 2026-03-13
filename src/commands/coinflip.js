@@ -12,7 +12,7 @@ module.exports = {
         const embed = createEmbed({
             title: 'Coin Flip',
             description: `The coin landed on...\n\n# ${emoji} **${result}**`,
-            color: result === 'Heads' ? '#F1C40F' : '#95A5A6'
+            color: result === 'Heads' ? '#F1C40F' : '#A3B1C6'
         });
 
         await interaction.reply({ embeds: [embed] });

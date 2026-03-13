@@ -25,7 +25,7 @@ module.exports = {
             const embed = createEmbed({
                 title: `Weather in ${area.areaName[0].value}, ${area.country[0].value}`,
                 description: `**${current.weatherDesc[0].value}**`,
-                color: '#3498DB'
+                color: '#00FFCC'
             })
             .addFields(
                 { name: 'Temperature', value: `${current.temp_C}°C / ${current.temp_F}°F`, inline: true },

@@ -26,7 +26,7 @@ module.exports = {
         const embed = createEmbed({
             title: '🛠️ Support Tickets',
             description: `Need help from the staff team in **${interaction.guild.name}**?\n\nClick the button below to open a private channel with the Administrators.`,
-            color: '#3498DB',
+            color: '#00FFCC',
             thumbnail: interaction.guild.iconURL()
         });
 

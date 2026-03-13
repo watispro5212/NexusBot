@@ -41,7 +41,7 @@ module.exports = {
             title: `🏆 ${target.username}'s Rank`,
             thumbnail: target.displayAvatarURL({ dynamic: true }),
             description: `**Level:** ${data.level}\n**Total XP:** ${data.xp} / ${requiredXp}\n\n${generateProgressBar(data.xp, requiredXp)}\n\n*Chat in servers to earn XP passively and level up!*`,
-            color: '#3498DB'
+            color: '#00FFCC'
         });
 
         await interaction.reply({ embeds: [embed] });

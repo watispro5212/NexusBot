@@ -27,7 +27,7 @@ module.exports = {
         const embed = createEmbed({
             title: 'Rock, Paper, Scissors!',
             description: 'Choose your weapon below. You have 15 seconds.',
-            color: '#5865F2'
+            color: '#00FFCC'
         });
 
         const reply = await interaction.reply({ 
@@ -53,17 +53,17 @@ module.exports = {
             const botChoice = CHOICES[botChoiceId];
 
             let resultLabel = '';
-            let color = '#5865F2';
+            let color = '#00FFCC';
 
             if (userChoiceId === botChoiceId) {
                 resultLabel = '🤝 It\'s a Tie!';
-                color = '#FEE75C'; // yellow
+                color = '#FFCC00'; // yellow
             } else if (userChoice.beats === botChoiceId) {
                 resultLabel = '🏆 You Win!';
-                color = '#57F287'; // green
+                color = '#00FFCC'; // green
             } else {
                 resultLabel = '💀 Bot Wins!';
-                color = '#ED4245'; // red
+                color = '#FF4B2B'; // red
             }
 
             const resultEmbed = createEmbed({
@@ -85,7 +85,7 @@ module.exports = {
                 const timeoutEmbed = createEmbed({
                     title: '⏰ Too Slow!',
                     description: 'You took too long to choose a weapon.',
-                    color: '#95A5A6'
+                    color: '#A3B1C6'
                 });
                 await interaction.editReply({ embeds: [timeoutEmbed], components: [] }).catch(() => null);
             }
