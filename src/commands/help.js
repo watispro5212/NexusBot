@@ -123,11 +123,8 @@ module.exports = {
             footer: 'Module interface active for 3 minutes.'
         });
 
-        const response = await interaction.reply({ 
-            embeds: [initialEmbed], 
-            components: [row],
-            withResponse: true 
-        });
+        await interaction.reply(});
+		const  = await interaction.fetchReply();
 
         // Setup component collector for the dropdown
         const collector = response.createMessageComponentCollector({ 

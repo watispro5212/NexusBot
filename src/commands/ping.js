@@ -6,16 +6,8 @@ module.exports = {
         .setName('ping')
         .setDescription('Check the connection pulse of the Nexus.'),
     async execute(interaction) {
-        const sent = await interaction.reply({ 
-            embeds: [
-                createEmbed({
-                    title: '🛰️ Pinging...',
-                    description: 'Tapping into the data streams...',
-                    color: '#00FFCC'
-                })
-            ], 
-            withResponse: true 
-        });
+        await interaction.reply(});
+		const  = await interaction.fetchReply();
 
         const roundtripLatency = sent.createdTimestamp - interaction.createdTimestamp;
         const wsLatency = Math.round(interaction.client.ws.ping);

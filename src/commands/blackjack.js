@@ -127,11 +127,8 @@ module.exports = {
             });
         }
 
-        const reply = await interaction.reply({ 
-            embeds: [buildEmbed('Game in progress. Your turn.', '#00FFCC')], 
-            components: [buttons], 
-            withResponse: true 
-        });
+        await interaction.reply(});
+		const  = await interaction.fetchReply();
 
         const collector = reply.createMessageComponentCollector({ componentType: ComponentType.Button, time: 60000 });
 

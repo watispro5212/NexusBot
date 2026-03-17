@@ -46,11 +46,8 @@ module.exports = {
             color: '#00FFCC'
         });
 
-        const reply = await interaction.reply({ 
-            embeds: [embed], 
-            components: [row],
-            withResponse: true 
-        });
+        await interaction.reply(});
+		const  = await interaction.fetchReply();
 
         const collector = reply.createMessageComponentCollector({ 
             componentType: ComponentType.Button, 

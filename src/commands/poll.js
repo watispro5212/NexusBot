@@ -38,7 +38,8 @@ module.exports = {
             color: '#00FFCC'
         }).setFooter({ text: `Oracle: ${interaction.user.tag}` });
 
-        const message = await interaction.reply({ embeds: [embed], withResponse: true });
+        await interaction.reply(});
+		const  = await interaction.fetchReply();
 
         for (let i = 0; i < optionsList.length; i++) {
             await message.react(emojis[i]);

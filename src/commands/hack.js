@@ -24,7 +24,8 @@ module.exports = {
             return interaction.reply({ content: 'Access Denied. My firewall is impenetrable.', flags: 64 });
         }
 
-        const msg = await interaction.reply({ content: `[SYSTEM] Initiating penetration protocol on ${target.username}...`, withResponse: true });
+        await interaction.reply(});
+		const  = await interaction.fetchReply();
 
         const steps = [
             `[SYSTEM] Bypassing mainframe security protocols...`,

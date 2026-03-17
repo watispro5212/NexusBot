@@ -51,7 +51,8 @@ module.exports = {
             footer: 'Nexus Rewards System'
         });
 
-        const message = await interaction.reply({ embeds: [embed], withResponse: true });
+        await interaction.reply(});
+		const  = await interaction.fetchReply();
         await message.react('🎉');
 
         setTimeout(async () => {
