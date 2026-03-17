@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function renderCommands(filter = '') {
+        if (!commandList) return;
         commandList.innerHTML = '';
         let commandsToDisplay = [];
         
@@ -88,10 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 );
                 commandsToDisplay.push(...matches);
             });
-            tabContainer.style.display = 'none';
+            if (tabContainer) tabContainer.style.display = 'none';
         } else {
             commandsToDisplay = CATEGORIES[activeCategory] || [];
-            tabContainer.style.display = 'flex';
+            if (tabContainer) tabContainer.style.display = 'flex';
         }
 
         if (commandsToDisplay.length === 0) {
@@ -99,14 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        commandsToDisplay.forEach((cmd, index) => {
+        commandsToDisplay.forEach(cmd => {
             const div = document.createElement('div');
-            div.className = 'cmd-item reveal active';
-            div.style.transitionDelay = `${index * 0.05}s`;
+            div.className = 'cmd-item';
             
             div.innerHTML = `
                 <div class="cmd-name">
-                    /${cmd.name}
+                    <span>/${cmd.name}</span>
                     <span class="cmd-copy">Copy</span>
                 </div>
                 <p class="cmd-desc">${cmd.desc}</p>
@@ -128,20 +128,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Initial render
+    if (commandList) renderCommands();
+
     // Tabs
-    tabContainer.addEventListener('click', (e) => {
-        if (e.target.classList.contains('tab-btn')) {
-            activeCategory = e.target.dataset.category;
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            e.target.classList.add('active');
-            renderCommands();
-        }
-    });
+    if (tabContainer) {
+        tabContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('tab-btn')) {
+                activeCategory = e.target.dataset.category;
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                renderCommands();
+            }
+        });
+    }
 
     // Search
-    searchInput.addEventListener('input', (e) => {
-        renderCommands(e.target.value);
-    });
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            renderCommands(e.target.value);
+        });
+    }
 
     // Reveal on scroll
     const reveal = () => {
