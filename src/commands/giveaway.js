@@ -1,21 +1,21 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const { createEmbed } = require('../utils/embed');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('giveaway')
-        .setDescription('Airdrop resources to the community.')
+        .setDescription('Initiates a high-priority resource airdrop protocol for the community.')
         .addStringOption(option => 
             option.setName('prize')
-                .setDescription('The item being dropped.')
+                .setDescription('The resource package being dropped.')
                 .setRequired(true))
         .addStringOption(option => 
             option.setName('duration')
-                .setDescription('Duration (e.g., 10s, 5m, 1h).')
+                .setDescription('Airdrop duration (e.g., 10s, 5m, 1h).')
                 .setRequired(true))
         .addIntegerOption(option => 
             option.setName('winners')
-                .setDescription('Number of recipients (default 1).')
+                .setDescription('Number of authorized recipients (default 1).')
                 .setMinValue(1)
                 .setMaxValue(10)
                 .setRequired(false))
@@ -27,7 +27,7 @@ module.exports = {
 
         const timeMatch = durationStr.match(/^(\d+)([smhd])$/);
         if (!timeMatch) {
-            return interaction.reply({ content: 'Invalid time format. Try something like `10s`, `5m`, `1h`, `1d`.', flags: 64 });
+            return interaction.reply({ content: '\`[ERROR]\` Invalid temporal format. Use: 10s, 5m, 1h, 1d.', flags: 64 });
         }
 
         const value = parseInt(timeMatch[1]);
@@ -40,16 +40,16 @@ module.exports = {
         else if (unit === 'd') ms = value * 24 * 60 * 60 * 1000;
 
         if (ms > 7 * 24 * 60 * 60 * 1000) {
-            return interaction.reply({ content: 'Maximum drop duration is 7 days.', flags: 64 });
+            return interaction.reply({ content: '\`[LIMIT]\` Temporal window too wide. Max duration is 7 days.', flags: 64 });
         }
 
         const endsAt = Math.floor((Date.now() + ms) / 1000);
 
         const embed = createEmbed({
-            title: `🎉 Resource Airdrop: ${prize}`,
-            description: `React with 🎉 to enter!\nEnds: <t:${endsAt}:R>\nWinners: **${winnerCount}**`,
+            title: `📦 High-Priority Airdrop: ${prize}`,
+            description: `\`[TRANS-DROP INITIATED]\` \n\nInteract with 🎉 to authorize receipt!\n\n**Protocol Details:**\n🛰️ Ends: <t:${endsAt}:R>\n👥 Recipients: **${winnerCount}**`,
             color: '#00FFCC',
-            footer: 'Nexus Rewards System'
+            footer: 'Nexus Logistics | AIRDROP-001'
         });
 
         const message = await interaction.reply({ 
@@ -60,38 +60,35 @@ module.exports = {
 
         setTimeout(async () => {
             try {
-                // Fetch the latest version of the message to get accurate reactions
                 const fetchedMsg = await interaction.channel.messages.fetch(message.id);
                 const reaction = fetchedMsg.reactions.cache.get('🎉');
                 
-                // Exclude the bot from the count
                 const users = await reaction.users.fetch();
                 const validUsers = users.filter(u => !u.bot).map(u => u);
 
                 if (validUsers.length === 0) {
-                    return interaction.followUp({ content: `The airdrop for **${prize}** has ended. No participation detected.` });
+                    return interaction.followUp({ content: `\`[ABORT]\` Airdrop for **${prize}** failed. No valid recipients detected.` });
                 }
 
-                // Randomly select winners
                 const winners = [];
                 const actualWinnerCount = Math.min(winnerCount, validUsers.length);
                 
                 for (let i = 0; i < actualWinnerCount; i++) {
                     const randomIndex = Math.floor(Math.random() * validUsers.length);
                     winners.push(validUsers[randomIndex]);
-                    validUsers.splice(randomIndex, 1); // remove so they aren't picked twice
+                    validUsers.splice(randomIndex, 1);
                 }
 
                 const winnerMentions = winners.map(w => `<@${w.id}>`).join(', ');
 
                 const endEmbed = createEmbed({
-                    title: `🎉 Airdrop Closed: ${prize}`,
-                    description: `Transmitting rewards to: ${winnerMentions}`,
+                    title: `📦 Airdrop Locked: ${prize}`,
+                    description: `\`[DISTRIBUTION COMPLETE]\` \n\nResources successfully routed to: ${winnerMentions}`,
                     color: '#00FFCC',
-                    footer: 'Nexus Rewards System'
+                    footer: 'Nexus Logistics | DIST-SUCCESS'
                 });
 
-                await interaction.followUp({ content: winnerMentions, embeds: [endEmbed] });
+                await interaction.followUp({ content: `\`🚨 [RECIPIENTS FOUND]\`` + winnerMentions, embeds: [endEmbed] });
             } catch (error) {
                 console.error('Giveaway error:', error);
             }
