@@ -1,27 +1,60 @@
 const { EmbedBuilder } = require('discord.js');
 
 /**
- * Valid options:
- * @param {String} title
- * @param {String} description
- * @param {String|Number} color
- * @param {Array} fields
- * @param {String} footer
- * @param {String} thumbnail
- * @param {String} image
- * @param {Boolean} timestamp
+ * Nexus Design System - Embed Generator
+ * @param {Object} options 
+ * @param {String} options.title
+ * @param {String} options.description
+ * @param {String|Number} options.color
+ * @param {Array} options.fields
+ * @param {String} options.footer
+ * @param {String} options.thumbnail
+ * @param {String} options.image
+ * @param {Boolean} options.timestamp
+ * @param {String} options.type - 'error', 'success', 'info', 'warning'
  */
 function createEmbed(options = {}) {
+    const palette = {
+        primary: '#00FFCC', // Cyan
+        secondary: '#BC13FE', // Purple
+        error: '#FF0055', // Red
+        warning: '#FFCC00', // Gold
+        info: '#00AAFF', // Blue
+        success: '#00FF88' // Green
+    };
+
+    let embedColor = options.color;
+    if (!embedColor) {
+        if (options.type) embedColor = palette[options.type];
+        else embedColor = palette.primary;
+    }
+
     const embed = new EmbedBuilder()
-        .setColor(options.color || '#00FFCC'); // Nexus Cyan default
+        .setColor(embedColor);
     
-    if (options.title) embed.setTitle(options.title);
-    if (options.description) embed.setDescription(options.description);
+    // Add prefix to title for better visual hierarchy if it exists
+    if (options.title) {
+        let prefix = '💿';
+        if (options.type === 'error') prefix = '🚫';
+        if (options.type === 'warning') prefix = '⚠️';
+        if (options.type === 'success') prefix = '✅';
+        
+        embed.setTitle(`${prefix} ${options.title}`);
+    }
+
+    if (options.description) {
+        // Wrap description in code block for certain types or just format it
+        embed.setDescription(options.description);
+    }
+
     if (options.fields) embed.addFields(options.fields);
     
-    // Premium Footer
-    const footerText = options.footer || '💿 Nexus System Interface';
-    embed.setFooter({ text: footerText });
+    // Standardized Premium Footer
+    const footerText = options.footer || 'Nexus Core System // Sector v2.0';
+    embed.setFooter({ 
+        text: footerText,
+        iconURL: 'https://cdn.discordapp.com/emojis/112233445566778899.png' // Placeholder for bot icon if available
+    });
     
     if (options.thumbnail) embed.setThumbnail(options.thumbnail);
     if (options.image) embed.setImage(options.image);

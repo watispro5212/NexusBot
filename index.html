@@ -66,6 +66,45 @@
             </div>
         </section>
 
+        <section class="section" id="commands">
+            <div class="section-header reveal">
+                <span class="section-label">Inventory</span>
+                <h2 class="section-title">Command Explorer</h2>
+            </div>
+            
+            <div class="terminal-container reveal">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--primary);">NEXUS_SHELL // EXECUTING_QUERY...</div>
+                </div>
+                
+                <div class="terminal-body">
+                    <div class="search-box">
+                        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="command-search" placeholder="Scan for command signal...">
+                    </div>
+
+                    <div class="tab-nav" id="category-tabs">
+                        <button class="tab-btn active" data-category="utility">Utility</button>
+                        <button class="tab-btn" data-category="economy">Economy</button>
+                        <button class="tab-btn" data-category="casino">Casino</button>
+                        <button class="tab-btn" data-category="leveling">Leveling</button>
+                        <button class="tab-btn" data-category="moderation">Moderation</button>
+                        <button class="tab-btn" data-category="fun">Fun</button>
+                        <button class="tab-btn" data-category="media">Media</button>
+                    </div>
+
+                    <div class="cmd-grid" id="command-list">
+                        <!-- Commands injected by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="section" id="network-status" style="padding-top: 0;">
             <div class="terminal-container reveal" style="max-width: 600px; margin: 0 auto; border-color: var(--primary-glow);">
                 <div class="terminal-header" style="background: rgba(0, 255, 204, 0.05);">

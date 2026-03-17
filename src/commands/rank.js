@@ -1,21 +1,9 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { createEmbed } = require('../utils/embed');
+const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js');
 const economy = require('../utils/EconomyManager');
+const canvas = require('../utils/CanvasManager');
 
 function getXpRequirement(level) {
     return Math.floor(100 * Math.pow(level, 1.5));
-}
-
-function generateProgressBar(current, max, length = 10) {
-    const progress = Math.min(Math.max(current / max, 0), 1);
-    const filledCount = Math.round(progress * length);
-    const emptyCount = length - filledCount;
-    
-    const filled = '🟩'.repeat(filledCount);
-    const empty = '⬛'.repeat(emptyCount);
-    
-    const percentage = Math.floor(progress * 100);
-    return `[ ${filled}${empty} ] **${percentage}%**`;
 }
 
 module.exports = {
@@ -28,22 +16,31 @@ module.exports = {
                 .setRequired(false)
         ),
     async execute(interaction) {
+        await interaction.deferReply();
+        
         const target = interaction.options.getUser('target') || interaction.user;
         
         if (target.bot) {
-            return interaction.reply({ content: 'Bots don\'t earn XP!', flags: 64 });
+            return interaction.editReply({ content: 'Bots don\'t earn XP!', flags: 64 });
         }
 
         const data = await economy.getUser(target.id, interaction.guild.id);
         const requiredXp = getXpRequirement(data.level);
 
-        const embed = createEmbed({
-            title: `🏆 ${target.username}'s Rank`,
-            thumbnail: target.displayAvatarURL({ dynamic: true }),
-            description: `**Level:** ${data.level}\n**Total XP:** ${data.xp} / ${requiredXp}\n\n${generateProgressBar(data.xp, requiredXp)}\n\n*Chat in servers to earn XP passively and level up!*`,
-            color: '#00FFCC'
+        // Fetch leaderboard position
+        const allUsers = await require('../models/User').find({ guildId: interaction.guild.id }).sort({ xp: -1, level: -1 });
+        const rank = allUsers.findIndex(u => u.userId === target.id) + 1;
+
+        const buffer = await canvas.generateRankCard({
+            username: target.username,
+            avatarURL: target.displayAvatarURL({ forceStatic: true, extension: 'png' }),
+            level: data.level,
+            currentXp: data.xp,
+            requiredXp: requiredXp,
+            rank: rank
         });
 
-        await interaction.reply({ embeds: [embed] });
+        const attachment = new AttachmentBuilder(buffer, { name: 'rank-card.png' });
+        await interaction.editReply({ files: [attachment] });
     },
 };

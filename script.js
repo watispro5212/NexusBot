@@ -167,6 +167,22 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', reveal);
     reveal(); // Initial check
 
+    // Parallax Effect
+    document.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 20;
+        const y = (e.clientY / window.innerHeight - 0.5) * 20;
+        
+        const grid = document.querySelector('.grid-overlay');
+        if (grid) {
+            grid.style.transform = `perspective(1000px) rotateX(60deg) translate(${x}px, ${y}px)`;
+        }
+
+        const hero = document.querySelector('.hero-title');
+        if (hero) {
+            hero.style.transform = `translate(${x * -0.2}px, ${y * -0.2}px)`;
+        }
+    });
+
     // Initial Command Render (only if element exists)
     if (commandList) {
         renderCommands();
