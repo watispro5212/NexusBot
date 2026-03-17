@@ -60,6 +60,7 @@ const CATEGORIES = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    // DOM Elements with null safety
     const nav = document.querySelector('nav');
     const tabContainer = document.getElementById('category-tabs');
     const commandList = document.getElementById('command-list');
@@ -69,15 +70,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Navbar scroll effect
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
+        if (nav && window.scrollY > 50) {
             nav.classList.add('scrolled');
-        } else {
+        } else if (nav) {
             nav.classList.remove('scrolled');
         }
     });
 
     function renderCommands(filter = '') {
+        // Exit if the container doesn't exist on this page
         if (!commandList) return;
+        
         commandList.innerHTML = '';
         let commandsToDisplay = [];
         
@@ -96,14 +99,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (commandsToDisplay.length === 0) {
-            commandList.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-dim);">No command signals found in this bandwidth.</div>';
+            commandList.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-dim);">No command signals found.</div>';
             return;
         }
 
         commandsToDisplay.forEach(cmd => {
             const div = document.createElement('div');
             div.className = 'cmd-item';
-            
             div.innerHTML = `
                 <div class="cmd-name">
                     <span>/${cmd.name}</span>
@@ -115,12 +117,14 @@ document.addEventListener('DOMContentLoaded', () => {
             div.onclick = () => {
                 navigator.clipboard.writeText(`/${cmd.name}`).then(() => {
                     const copySpan = div.querySelector('.cmd-copy');
-                    copySpan.innerText = 'COPIED';
-                    copySpan.style.color = 'var(--primary)';
-                    setTimeout(() => {
-                        copySpan.innerText = 'COPY';
-                        copySpan.style.color = 'inherit';
-                    }, 2000);
+                    if (copySpan) {
+                        copySpan.innerText = 'COPIED';
+                        copySpan.style.color = 'var(--primary)';
+                        setTimeout(() => {
+                            copySpan.innerText = 'COPY';
+                            copySpan.style.color = 'inherit';
+                        }, 2000);
+                    }
                 });
             };
 
@@ -128,10 +132,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Tabs
-    if (tabContainer) {
+    // Tabs Event Listener
+    if (tabContainer && tabContainer.addEventListener) {
         tabContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('tab-btn')) {
+            if (e.target && e.target.classList.contains('tab-btn')) {
                 activeCategory = e.target.dataset.category;
                 document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
                 e.target.classList.add('active');
@@ -140,8 +144,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Search
-    if (searchInput) {
+    // Search Input Event Listener
+    if (searchInput && searchInput.addEventListener) {
         searchInput.addEventListener('input', (e) => {
             renderCommands(e.target.value);
         });
@@ -161,9 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('scroll', reveal);
-    reveal(); // init
+    reveal(); // Initial check
 
-    // Initial render call with safety check
+    // Initial Command Render (only if element exists)
     if (commandList) {
         renderCommands();
     }
