@@ -14,53 +14,188 @@
     
     <%- include('partials/header') %>
 
-    <div class="container" style="padding-top: 120px; min-height: 80vh;">
-        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
-            <% if (guild.icon) { %>
-                <img src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon %>.png" alt="Icon" style="width: 80px; height: 80px; border-radius: 12px; border: 2px solid var(--primary);">
-            <% } %>
-            <div>
-                <a href="/dashboard" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">← Back to Hub</a>
-                <h1 class="hero-title" style="font-size: 2.5rem; text-align: left; margin: 0;"><%= guild.name %> Configuration</h1>
+    <div class="container dashboard-container" style="padding-top: 100px; min-height: 80vh;">
+        <!-- Server Header with Statistics -->
+        <div class="dashboard-header feature-card">
+            <div class="header-main">
+                <% if (guild.icon) { %>
+                    <img src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon %>.png" alt="Icon" class="guild-header-icon">
+                <% } else { %>
+                    <div class="guild-icon-placeholder"><%= guild.name.charAt(0) %></div>
+                <% } %>
+                <div>
+                    <a href="/dashboard" class="back-link">← Back to Hub</a>
+                    <h1 class="hero-title" style="font-size: 2rem; text-align: left; margin: 0;"><%= guild.name %></h1>
+                </div>
+            </div>
+            
+            <div class="header-stats">
+                <div class="stat-box">
+                    <span class="stat-value"><%= guild.approximate_member_count || guild.memberCount || '???' %></span>
+                    <span class="stat-label">Members</span>
+                </div>
+                <!-- Optional stats if available from Discord API, otherwise placeholders -->
+                <div class="stat-box">
+                    <span class="stat-value"><%= guild.channels ? guild.channels.cache.size : 'Active' %></span>
+                    <span class="stat-label">Network</span>
+                </div>
             </div>
         </div>
 
-        <form action="/api/settings/<%= guild.id %>" method="POST" class="settings-form feature-card" style="max-width: 800px; display: flex; flex-direction: column; gap: 1.5rem;">
-            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.5rem;">
-                <label for="welcomeChannelId" style="font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--primary);">Welcome Channel ID</label>
-                <input type="text" id="welcomeChannelId" name="welcomeChannelId" placeholder="e.g. 1320058519642177668" value="<%= config.welcomeChannelId || '' %>" style="background: var(--bg-hover); border: 1px solid var(--border); color: #fff; padding: 0.8rem; border-radius: 8px; font-family: inherit;">
-                <small style="color: var(--text-muted);">The ID of the channel where welcome messages are sent. Leave blank to disable.</small>
-            </div>
+        <div class="dashboard-layout">
+            <!-- Sidebar Navigation -->
+            <aside class="dashboard-sidebar">
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item active" data-tab="general">
+                        <span class="sidebar-icon">⚙️</span> General
+                    </li>
+                    <li class="sidebar-item" data-tab="modules">
+                        <span class="sidebar-icon">🧩</span> Modules
+                    </li>
+                    <li class="sidebar-item" data-tab="automod">
+                        <span class="sidebar-icon">🛡️</span> Auto-Mod
+                    </li>
+                </ul>
+            </aside>
 
-            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.5rem;">
-                <label for="logChannelId" style="font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--primary);">Audit Log Channel ID</label>
-                <input type="text" id="logChannelId" name="logChannelId" placeholder="e.g. 1320058519642177668" value="<%= config.logChannelId || '' %>" style="background: var(--bg-hover); border: 1px solid var(--border); color: #fff; padding: 0.8rem; border-radius: 8px; font-family: inherit;">
-            </div>
+            <!-- Main Configuration Area -->
+            <main class="dashboard-content feature-card">
+                <form action="/api/settings/<%= guild.id %>" method="POST" id="settingsForm" class="settings-form">
+                    
+                    <!-- GENERAL TAB -->
+                    <div class="tab-pane active" id="tab-general">
+                        <h2>General Configuration</h2>
+                        <p class="text-muted">Configure the core parameters for this node.</p>
+                        
+                        <div class="form-group">
+                            <label for="welcomeChannelId">Welcome Channel ID</label>
+                            <input type="text" id="welcomeChannelId" name="welcomeChannelId" placeholder="e.g. 1320058519642177668" value="<%= config.welcomeChannelId || '' %>">
+                            <small>The ID of the channel where welcome messages are sent. Leave blank to disable.</small>
+                        </div>
 
-            <div class="form-group" style="display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
-                <input type="checkbox" id="economyEnabled" name="economyEnabled" <%= config.economyEnabled ? 'checked' : '' %> style="width: 20px; height: 20px; accent-color: var(--primary);">
-                <label for="economyEnabled" style="font-weight: 600;">Enable Local Economy Systems</label>
-            </div>
-            
-            <div class="form-group" style="display: flex; align-items: center; gap: 1rem;">
-                <input type="checkbox" id="strictMode" name="strictMode" <%= config.strictMode ? 'checked' : '' %> style="width: 20px; height: 20px; accent-color: var(--primary);">
-                <label for="strictMode" style="font-weight: 600;">Enable Strict Administrative Override</label>
-            </div>
+                        <div class="form-group">
+                            <label for="logChannelId">Audit Log Channel ID</label>
+                            <input type="text" id="logChannelId" name="logChannelId" placeholder="e.g. 1320058519642177668" value="<%= config.logChannelId || '' %>">
+                            <small>Channel where administrative logs and infractions are posted.</small>
+                        </div>
+                        
+                        <div class="form-group toggle-group">
+                            <div class="toggle-info">
+                                <label for="strictMode">Strict Administrative Override</label>
+                                <small>Forces strict validation on all moderator commands.</small>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="strictMode" name="strictMode" <%= config.strictMode ? 'checked' : '' %>>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
 
-            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
-                <button type="submit" class="btn btn-primary" style="width: 100%; border: none; cursor: pointer;">Save Protocol Specifications</button>
-            </div>
-        </form>
+                    <!-- MODULES TAB -->
+                    <div class="tab-pane" id="tab-modules">
+                        <h2>System Modules</h2>
+                        <p class="text-muted">Enable or disable specific command packages.</p>
+
+                        <div class="form-group toggle-group">
+                            <div class="toggle-info">
+                                <label for="economyEnabled">Economy System</label>
+                                <small>Enables /work, /daily, /balance, and banking commands.</small>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="economyEnabled" name="economyEnabled" <%= config.economyEnabled ? 'checked' : '' %>>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="form-group toggle-group">
+                            <div class="toggle-info">
+                                <label for="casinoEnabled">High-Stakes Interface (Casino)</label>
+                                <small>Enables /blackjack and /slots commands. Requires Economy.</small>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="casinoEnabled" name="casinoEnabled" <%= config.casinoEnabled ? 'checked' : '' %>>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+                        <div class="form-group toggle-group">
+                            <div class="toggle-info">
+                                <label for="funEnabled">Entertainment Commands</label>
+                                <small>Enables /say, /8ball, /meme, and other fun interactions.</small>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="funEnabled" name="funEnabled" <%= config.funEnabled ? 'checked' : '' %>>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="form-group toggle-group">
+                            <div class="toggle-info">
+                                <label for="levelingEnabled">Reputation & Leveling</label>
+                                <small>Tracks message XP and enables the /rank profile card.</small>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="levelingEnabled" name="levelingEnabled" <%= config.levelingEnabled ? 'checked' : '' %>>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- AUTO-MOD TAB -->
+                    <div class="tab-pane" id="tab-automod">
+                        <h2>Auto-Moderation Protocol</h2>
+                        <p class="text-muted">Deploy automated defenses against malicious network traffic.</p>
+
+                        <div class="form-group toggle-group">
+                            <div class="toggle-info">
+                                <label for="antiSpam">Anti-Spam Filter</label>
+                                <small>Automatically mutes users who send too many messages too quickly.</small>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="antiSpam" name="antiSpam" <%= config.antiSpam ? 'checked' : '' %>>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="badWordsList">Blacklisted Terminology</label>
+                            <textarea id="badWordsList" name="badWordsList" placeholder="word1, word2, badword, etc..." rows="3"><%= config.badWords ? config.badWords.join(', ') : '' %></textarea>
+                            <small>Comma-separated list of words to automatically delete and warn users for.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Save Protocol Specifications</button>
+                    </div>
+                </form>
+            </main>
+        </div>
     </div>
     
     <script>
         // Check URL for success
         const urlParams = new URLSearchParams(window.location.search);
         if(urlParams.get('success')) {
-            alert('Settings successfully synced with Nexus Core.'); // Simple alert for now, can be styled later
-            // Remove the success query param so it doesn't alert on reload
+            alert('Settings successfully synced with Nexus Core.'); 
             window.history.replaceState({}, document.title, window.location.pathname);
         }
+
+        // Tab Navigation Logic
+        const tabs = document.querySelectorAll('.sidebar-item');
+        const panes = document.querySelectorAll('.tab-pane');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all
+                tabs.forEach(t => t.classList.remove('active'));
+                panes.forEach(p => p.classList.remove('active'));
+
+                // Add active class to clicked
+                tab.classList.add('active');
+                const targetId = 'tab-' + tab.getAttribute('data-tab');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
     </script>
 </body>
 </html>

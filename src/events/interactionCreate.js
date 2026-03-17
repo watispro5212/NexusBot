@@ -127,6 +127,45 @@ module.exports = {
             return;
         }
 
+        // --- DASHBOARD MODULE TOGGLES ---
+        const GuildConfig = require('../models/GuildConfig');
+        const config = await GuildConfig.findOne({ guildId: interaction.guild.id });
+        
+        if (config) {
+            const economyCmds = ['balance', 'daily', 'work', 'buy', 'inventory', 'shop', 'transfer'];
+            const casinoCmds = ['blackjack', 'slots', 'coinflip', 'rob'];
+            const funCmds = ['8ball', 'cat', 'dog', 'emojify', 'fact', 'hack', 'joke', 'meme', 'quote', 'roll', 'rps', 'say', 'trivia', 'urban'];
+            const levelingCmds = ['rank', 'leaderboard']; // Leaderboard also used for economy, but strictly leveling mostly
+
+            if (!config.economyEnabled && economyCmds.includes(interaction.commandName)) {
+                return interaction.reply({ 
+                    embeds: [createEmbed({ title: '❌ Module Disabled', description: 'The **Economy** module is disabled on this server.', color: '#ED4245' })],
+                    ephemeral: true 
+                });
+            }
+
+            if (!config.casinoEnabled && casinoCmds.includes(interaction.commandName)) {
+                return interaction.reply({ 
+                    embeds: [createEmbed({ title: '❌ Module Disabled', description: 'The **Casino** module is disabled on this server.', color: '#ED4245' })],
+                    ephemeral: true 
+                });
+            }
+
+            if (!config.funEnabled && funCmds.includes(interaction.commandName)) {
+                return interaction.reply({ 
+                    embeds: [createEmbed({ title: '❌ Module Disabled', description: 'The **Fun** module is disabled on this server.', color: '#ED4245' })],
+                    ephemeral: true 
+                });
+            }
+
+            if (!config.levelingEnabled && levelingCmds.includes(interaction.commandName)) {
+                return interaction.reply({ 
+                    embeds: [createEmbed({ title: '❌ Module Disabled', description: 'The **Leveling** module is disabled on this server.', color: '#ED4245' })],
+                    ephemeral: true 
+                });
+            }
+        }
+
         try {
             await command.execute(interaction);
             logger.info(`${interaction.user.tag} executed /${interaction.commandName} in #${interaction.channel?.name || 'DM'}`);

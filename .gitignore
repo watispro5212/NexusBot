@@ -1,29 +1,6 @@
-# Dependencies
 node_modules/
-
-# Environment variables
 .env
-
-# Local data
-data/*.json
-
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDEs and editors
+data/
 .vscode/
-.idea/
-*.swp
-*.swo
-
-# Build/Dist (if any)
-dist/
-build/
+.DS_Store
+*.log

@@ -24,8 +24,14 @@ const rest = new REST().setToken(process.env.TOKEN);
         console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
 
+        const clientId = process.env.DISCORD_CLIENT_ID || process.env.CLIENT_ID;
+        
+        if (!clientId) {
+            throw new Error("Missing DISCORD_CLIENT_ID or CLIENT_ID in .env file.");
+        }
+
         const data = await rest.put(
-            Routes.applicationCommands(process.env.CLIENT_ID),
+            Routes.applicationCommands(clientId),
             { body: commands },
         );
 
