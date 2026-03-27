@@ -18,8 +18,8 @@ include prominent attribution to the original authors:
 
 This attribution must appear in:
 - The README or equivalent documentation of any distributed copy
-- The "About" or "Credits" section of any public-facing interface
-- Source code headers of substantially modified files
+- The "About" or "Credits" section of any public-facing dashboard interface
+- Source code headers of substantially modified bot systems (e.g. Starboard, Automod, Logging, Quests)
 
 ### 3. Non-Commercial Hosting
 You may host the Software for personal or community (non-commercial) use

@@ -23,7 +23,8 @@ const CATEGORIES = {
         { name: 'leaderboard', desc: 'Displays the top operatives by net worth' },
         { name: 'shop', desc: 'Access the underground hardware catalog (8 items!)' },
         { name: 'buy', desc: 'Acquire hardware from the shop' },
-        { name: 'inventory', desc: 'View your locally stored items' }
+        { name: 'inventory', desc: 'View your locally stored items' },
+        { name: 'quests', desc: 'Initialize your daily active sub-routines for credit bounties' }
     ],
     casino: [
         { name: 'blackjack', desc: 'Engage in a high-stakes protocol against the dealer' },
@@ -43,7 +44,9 @@ const CATEGORIES = {
         { name: 'slowmode', desc: 'Throttle output bandwidth in the current channel' },
         { name: 'say', desc: 'Transmit a cleartext message through the Nexus' },
         { name: 'verify-setup', desc: 'Drop a secure verification portal (Admin Only)' },
-        { name: 'ticket-setup', desc: 'Deploy a support ticket interface' }
+        { name: 'ticket-setup', desc: 'Deploy a support ticket interface' },
+        { name: 'automod-setup', desc: 'Configure automatic network filters for spam and unauthorized uplinks' },
+        { name: 'log-setup', desc: 'Establish an audit logging channel for purged and modified transmissions' }
     ],
     fun: [
         { name: '8ball', desc: 'Query the Oracle array for a yes/no outcome' },
@@ -54,7 +57,8 @@ const CATEGORIES = {
         { name: 'rps', desc: 'Simulate Rock, Paper, Scissors against the CPU' },
         { name: 'trivia', desc: 'Process a trivia data packet' },
         { name: 'hack', desc: 'Initiate a harmless penetration test on a target' },
-        { name: 'emojify', desc: 'Convert text data into an encrypted emoji string' }
+        { name: 'emojify', desc: 'Convert text data into an encrypted emoji string' },
+        { name: 'starboard-setup', desc: 'Initialize a starboard node to archive highlighted transmissions' }
     ],
     advanced: [
         { name: 'cyber-heist', desc: 'Execute a high-stakes multi-phase heist operation' },

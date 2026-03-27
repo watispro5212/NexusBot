@@ -1,6 +1,6 @@
 {
   "name": "nexus-protocol",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Elite-tier Discord integration with neural economy, casino, leveling, and advanced moderation.",
   "author": "watispro5212, watispro1",
   "main": "src/index.js",

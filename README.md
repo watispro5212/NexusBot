@@ -8,8 +8,8 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com)
 [![License](https://img.shields.io/badge/License-BSL-FF4444?style=for-the-badge)](LICENSE)
-[![Commands](https://img.shields.io/badge/Commands-62+-00FFCC?style=for-the-badge)](https://github.com/watispro5212/shiny-giigles)
-[![Version](https://img.shields.io/badge/Version-3.0.0-BC13FE?style=for-the-badge)](CHANGELOG.md)
+[![Commands](https://img.shields.io/badge/Commands-66+-00FFCC?style=for-the-badge)](https://github.com/watispro5212/shiny-giigles)
+[![Version](https://img.shields.io/badge/Version-4.0.0-BC13FE?style=for-the-badge)](CHANGELOG.md)
 
 </div>
 
@@ -17,7 +17,7 @@
 
 ## Overview
 
-Nexus Protocol is a high-performance Discord bot featuring a neural economy system, casino games, leveling, advanced moderation, and a full companion website — all wrapped in a cyberpunk aesthetic.
+Nexus Protocol is a high-performance Discord bot featuring a neural economy system, casino games, leveling, advanced moderation, a community starboard, audit logging, and a full companion dashboard — all wrapped in a cyberpunk aesthetic.
 
 ## Tech Stack
 
@@ -25,7 +25,7 @@ Nexus Protocol is a high-performance Discord bot featuring a neural economy syst
 |-----------|---------|
 | **Discord.js v14** | Discord API gateway |
 | **Node.js 18+** | Runtime environment |
-| **MongoDB + Mongoose** | Persistent data storage |
+| **MongoDB + Mongoose** | Persistent data storage and Guild Configurations |
 | **Canvas** | Dynamic rank card generation |
 | **Nodemon** | Development hot-reload |
 
@@ -34,8 +34,8 @@ Nexus Protocol is a high-performance Discord bot featuring a neural economy syst
 ### 🔧 Utility (13 commands)
 `ping` · `info` · `serverinfo` · `userinfo` · `avatar` · `servericon` · `math` · `timer` · `remind` · `poll` · `translate` · `weather` · `profile`
 
-### 💰 Economy (9 commands)
-`balance` · `daily` · `work` · `rob` · `transfer` · `leaderboard` · `shop` · `buy` · `inventory`
+### 💰 Economy & Progression (10 commands)
+`balance` · `daily` · `work` · `rob` · `transfer` · `leaderboard` · `shop` · `buy` · `inventory` · `quests` *(NEW)*
 
 ### 🎰 Casino (3 commands)
 `blackjack` · `slots` · `coinflip`
@@ -43,11 +43,11 @@ Nexus Protocol is a high-performance Discord bot featuring a neural economy syst
 ### 📈 Leveling (2 commands)
 `rank` · `leaderboard`
 
-### 🛡️ Moderation (10 commands)
-`ban` · `kick` · `warn` · `purge` · `lock` · `unlock` · `slowmode` · `say` · `verify-setup` · `ticket-setup`
+### 🛡️ Advanced Moderation (12 commands)
+`ban` · `kick` · `warn` · `purge` · `lock` · `unlock` · `slowmode` · `say` · `verify-setup` · `ticket-setup` · `automod-setup` *(NEW)* · `log-setup` *(NEW)*
 
-### 🎲 Fun (9 commands)
-`8ball` · `roll` · `rps` · `trivia` · `hack` · `emojify` · `joke` · `fact` · `quote`
+### 🎲 Fun & Community (10 commands)
+`8ball` · `roll` · `rps` · `trivia` · `hack` · `emojify` · `joke` · `fact` · `quote` · `starboard-setup` *(NEW)*
 
 ### ⚡ Advanced Operations (4 commands)
 `cyber-heist` · `giveaway` · `network-stats` · `shards`
@@ -69,8 +69,9 @@ Nexus Protocol implements a multi-layered security system:
 | **Owner Command Gate** | Root commands restricted to a single user ID |
 | **Cooldown Engine** | Per-command, per-user rate limiting (category-based) |
 | **Module Toggle** | Server admins can disable entire command categories |
-| **Anti-Spam** | Message-level spam detection and auto-moderation |
+| **Anti-Spam & Anti-Link** | Message flooding & unauthorized link detection |
 | **Bad Word Filter** | Configurable per-server word blacklist |
+| **Audit Logging** | Granular tracking of edited/deleted transmissions |
 | **Permission Checks** | Role-based access for moderation commands |
 
 ## Project Structure
@@ -80,8 +81,8 @@ nexus-protocol/
 ├── src/
 │   ├── bot.js              # Client initialization
 │   ├── index.js             # Shard manager
-│   ├── commands/            # 62 slash commands
-│   ├── events/              # Event handlers
+│   ├── commands/            # 66 slash commands
+│   ├── events/              # Event handlers (Starboard, Logs)
 │   ├── models/              # Mongoose schemas
 │   └── utils/               # Shared utilities
 │       ├── embed.js          # Embed builder
@@ -136,11 +137,11 @@ node deploy-commands.js
 
 ## Companion Website
 
-The Nexus Protocol includes a full companion website with:
+The Nexus Protocol includes a full completely overhauled companion website with:
 - **Home** — Feature showcase with animated stats and live operations feed
 - **Commands** — Searchable, filterable command reference
 - **Wiki** — Technical glossary and system documentation
-- **Staff** — Team profiles
+- **Staff** — Team profiles (including precise Owner ID avatar injection)
 - **Premium** — Tier comparison
 - **Changelog** — Version history timeline
 - **Status** — Real-time shard diagnostics
@@ -148,7 +149,7 @@ The Nexus Protocol includes a full companion website with:
 
 ## Authors
 
-**watispro5212** · **watispro1**
+**watispro5212** (Lead Developer & Creator) · **watispro1**
 
 ## License
 

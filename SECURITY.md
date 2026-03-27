@@ -4,9 +4,9 @@
 
 | Version | Status | Support |
 |---------|--------|---------|
-| 3.x     | ✅ Current | Full security patches |
-| 2.x     | ⚠️ Legacy  | Critical patches only |
-| < 2.0   | ❌ EOL     | No support |
+| 4.x     | ✅ Current | Full security patches |
+| 3.x     | ⚠️ Legacy  | Critical patches only |
+| < 3.0   | ❌ EOL     | No support |
 
 ## Security Architecture
 
@@ -18,7 +18,9 @@ Nexus Protocol implements the following security measures:
 - **Cooldown Engine** — Per-command, per-user rate limiting prevents abuse
 - **Guild-Only Lock** — All commands blocked in DMs
 - **Module Toggles** — Server admins can disable entire categories (economy, casino, fun, leveling)
-- **Anti-Spam Detection** — Auto-moderation for message flooding
+- **Anti-Spam & Anti-Link Detection** — Auto-moderation for message flooding and unauthorized URLs
+- **Audit Logging** — Tracks message deletions and edits globally protecting community transparency
+- **Starboard Sanitization** — Starboard cache mitigates spamming of starboard logs
 - **Bad Word Filter** — Configurable per-server word blacklist
 - **Error Isolation** — Double try-catch pattern prevents command crashes from killing the bot
 - **Memory Leak Prevention** — Automatic pruning of expired tracking data
