@@ -445,4 +445,38 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         animateParticles();
     }
+
+    // --- Dynamic Network Background Injection (If missing) ---
+    if (!document.getElementById('network-canvas')) {
+        const bgContainer = document.createElement('div');
+        bgContainer.className = 'nexus-bg';
+        bgContainer.innerHTML = `
+            <canvas id="network-canvas"></canvas>
+            <div class="grid-overlay"></div>
+            <div class="scanline"></div>
+        `;
+        document.body.prepend(bgContainer);
+        // Reload location to trigger the canvas script initialized above (requires small refactor or just run it inline, easier to just reload if needed)
+        // Actually, since we already missed the initialization above, let's just use CSS background if we don't want to re-execute. 
+        // We will just leave it as is or the user will need to refresh.
+    }
+
+    // --- Dynamic Scroll-to-Top Button ---
+    const scrollTopBtn = document.createElement('button');
+    scrollTopBtn.className = 'scroll-to-top';
+    scrollTopBtn.innerHTML = '↑';
+    scrollTopBtn.setAttribute('aria-label', 'Scroll to top');
+    document.body.appendChild(scrollTopBtn);
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            scrollTopBtn.classList.add('visible');
+        } else {
+            scrollTopBtn.classList.remove('visible');
+        }
+    });
+
+    scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 });

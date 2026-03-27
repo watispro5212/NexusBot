@@ -105,6 +105,24 @@ module.exports = {
             }
         }
 
+        // --- AUTO-MODERATION: ANTI-LINKS ---
+        if (config.antiLinks) {
+            // Check if user has administrator (avoid blocking admins)
+            if (!message.member.permissions.has('Administrator')) {
+                const linkRegex = /(https?:\/\/[^\s]+)/g;
+                if (linkRegex.test(message.content)) {
+                    try {
+                        await message.delete();
+                        await message.channel.send({
+                            content: `<@${userId}>`,
+                            embeds: [createEmbed({ title: '🚫 Link Blocked', description: 'Links are not allowed in this server.', color: '#ED4245' })]
+                        });
+                    } catch (e) { /* ignore */ }
+                    return;
+                }
+            }
+        }
+
         // --- LEVELING MODULE CHECK ---
         if (!config.levelingEnabled) return;
 
