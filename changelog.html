@@ -49,6 +49,25 @@
 
             <div class="changelog-timeline">
                 <div class="changelog-entry reveal">
+                    <div class="changelog-version" style="color: var(--primary); text-shadow: 0 0 10px var(--primary-glow);">v5.0.0 — CONVERGENCE OVERHAUL</div>
+                    <div class="changelog-date">March 28, 2026</div>
+                    <div class="changelog-body" style="border-color: var(--primary);">
+                        <ul>
+                            <li class="added"><strong>Slash:</strong> New <code>/invite</code> command (OAuth link + button) using <code>DISCORD_CLIENT_ID</code> or <code>CLIENT_ID</code>.</li>
+                            <li class="added"><strong>API:</strong> <code>GET /api/health</code> and <code>GET /api/version</code>; <code>/api/stats</code> now includes <code>version</code>.</li>
+                            <li class="fixed"><strong>Web server:</strong> Static hosting hardened — blocks <code>src/</code>, <code>node_modules/</code>, <code>scripts/</code>, dot-segment paths, <code>.env</code>, and <code>package-lock.json</code>; <code>dotfiles: 'deny'</code> on Express static.</li>
+                            <li class="fixed"><strong>Module toggles:</strong> <code>/leaderboard</code> and <code>/rob</code> follow the economy module; <code>/rank</code> only follows leveling; <code>/rob</code> no longer tied to casino-only toggle.</li>
+                            <li class="fixed"><strong>Cooldowns:</strong> Utility, media, and advanced commands mapped to category durations (advanced uses a longer default).</li>
+                            <li class="fixed"><strong>MongoDB:</strong> Connect only when <code>MONGODB_URI</code> is set; clear warning if missing.</li>
+                            <li class="fixed"><strong>Help matrix:</strong> Leveling category no longer lists economy <code>/leaderboard</code>; utility lists <code>/invite</code>.</li>
+                            <li class="added"><strong>Site:</strong> Home badge <code>v5.0</code>, command count <code>67+</code>, Open Graph / theme-color meta, Features card in Explore grid.</li>
+                            <li class="added"><strong>Docs:</strong> Rewrote LICENSE (BSL-Attribution), README, SECURITY; expanded <code>.env.example</code>; <code>npm run deploy</code> script.</li>
+                            <li class="added"><strong>Commands page:</strong> <code>/help</code> and <code>/invite</code> listed under Utility.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="changelog-entry reveal">
                     <div class="changelog-version" style="color: var(--primary); text-shadow: 0 0 10px var(--primary-glow);">v4.2.0 — SITE STABILIZATION</div>
                     <div class="changelog-date">March 28, 2026</div>
                     <div class="changelog-body" style="border-color: var(--primary);">

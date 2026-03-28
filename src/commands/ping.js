@@ -43,7 +43,7 @@ module.exports = {
                 { name: '🛰️ Roundtrip Trip', value: `\`${roundtripLatency}ms\``, inline: true },
                 { name: '🧬 Connection Health', value: `${icon} ${status}`, inline: false }
             ],
-            footer: 'Nexus Protocol v3.0 | Signal Strength: Max'
+            footer: 'Nexus Protocol | Signal Strength: Max'
         });
 
         setTimeout(async () => {

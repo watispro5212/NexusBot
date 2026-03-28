@@ -1,12 +1,13 @@
 {
   "name": "nexus-protocol",
-  "version": "4.0.0",
-  "description": "Elite-tier Discord integration with neural economy, casino, leveling, and advanced moderation.",
+  "version": "5.0.0",
+  "description": "Elite-tier Discord integration with neural economy, casino, leveling, advanced moderation, and a hardened companion web API.",
   "author": "watispro5212, watispro1",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "deploy": "node deploy-commands.js"
   },
   "dependencies": {
     "canvas": "^3.2.1",

@@ -16,6 +16,7 @@ const CATEGORIES = {
         emoji: '🔧',
         commands: [
             { name: 'ping', desc: 'Checks the bot\'s network status and latency pulse.' },
+            { name: 'invite', desc: 'Get a link to add Nexus to another server.' },
             { name: 'info', desc: 'Displays a core specification scan of the Nexus.' },
             { name: 'serverinfo', desc: 'Displays detailed encryption and sector data.' },
             { name: 'userinfo', desc: 'Initiates a biometric scan on a specified entity.' },
@@ -62,8 +63,7 @@ const CATEGORIES = {
         description: 'Track XP and rank metrics.',
         emoji: '📈',
         commands: [
-            { name: 'rank', desc: 'Displays your current neural level and XP pulse.' },
-            { name: 'leaderboard', desc: 'View the top operatives by level and XP.' }
+            { name: 'rank', desc: 'Displays your current neural level and XP pulse (rank card).' },
         ]
     },
     moderation: {

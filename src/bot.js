@@ -5,9 +5,13 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('[DATABASE] Connected to MongoDB.'))
-    .catch(err => console.error('[DATABASE] Connection error:', err));
+if (process.env.MONGODB_URI) {
+    mongoose.connect(process.env.MONGODB_URI)
+        .then(() => console.log('[DATABASE] Connected to MongoDB.'))
+        .catch(err => console.error('[DATABASE] Connection error:', err));
+} else {
+    console.warn('[DATABASE] MONGODB_URI is not set. Economy, guild config, and persistence commands will fail until it is configured.');
+}
 
 const client = new Client({
     intents: [

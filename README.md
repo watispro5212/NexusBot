@@ -2,14 +2,13 @@
 
 <div align="center">
 
-**⚡ Elite-Tier Discord Integration. Neural Economy. Real-Time Diagnostics. ⚡**
+**Elite-tier Discord integration — neural economy, moderation, casino, leveling, and a hardened companion site.**
 
 [![Discord.js](https://img.shields.io/badge/discord.js-v14-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.js.org)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com)
-[![License](https://img.shields.io/badge/License-BSL-FF4444?style=for-the-badge)](LICENSE)
-[![Commands](https://img.shields.io/badge/Commands-66+-00FFCC?style=for-the-badge)](https://github.com/watispro5212/shiny-giigles)
-[![Version](https://img.shields.io/badge/Version-4.0.0-BC13FE?style=for-the-badge)](CHANGELOG.md)
+[![License](https://img.shields.io/badge/License-BSL--Attribution-FF4444?style=for-the-badge)](LICENSE)
+[![Version](https://img.shields.io/badge/Version-5.0.0-00FFCC?style=for-the-badge)](changelog.html)
 
 </div>
 
@@ -17,140 +16,104 @@
 
 ## Overview
 
-Nexus Protocol is a high-performance Discord bot featuring a neural economy system, casino games, leveling, advanced moderation, a community starboard, audit logging, and a full companion dashboard — all wrapped in a cyberpunk aesthetic.
+Nexus Protocol is a **sharded** Discord.js v14 bot with MongoDB persistence: economy, quests, casino, XP/rank cards, moderation, tickets, verification, automod hooks, starboard, audit logging, and owner tooling. A static **companion website** ships in-repo; when you run the shard manager, **Express** serves those pages plus JSON APIs for health, version, and live stats.
 
-## Tech Stack
+## Requirements
 
-| Technology | Purpose |
-|-----------|---------|
-| **Discord.js v14** | Discord API gateway |
-| **Node.js 18+** | Runtime environment |
-| **MongoDB + Mongoose** | Persistent data storage and Guild Configurations |
-| **Canvas** | Dynamic rank card generation |
-| **Nodemon** | Development hot-reload |
+- **Node.js** 18+  
+- **MongoDB** (connection string in `.env`)  
+- **Discord** application with bot token and privileged intents as needed (`Message Content`, etc.)
 
-## Features
-
-### 🔧 Utility (13 commands)
-`ping` · `info` · `serverinfo` · `userinfo` · `avatar` · `servericon` · `math` · `timer` · `remind` · `poll` · `translate` · `weather` · `profile`
-
-### 💰 Economy & Progression (10 commands)
-`balance` · `daily` · `work` · `rob` · `transfer` · `leaderboard` · `shop` · `buy` · `inventory` · `quests` *(NEW)*
-
-### 🎰 Casino (3 commands)
-`blackjack` · `slots` · `coinflip`
-
-### 📈 Leveling (2 commands)
-`rank` · `leaderboard`
-
-### 🛡️ Advanced Moderation (12 commands)
-`ban` · `kick` · `warn` · `purge` · `lock` · `unlock` · `slowmode` · `say` · `verify-setup` · `ticket-setup` · `automod-setup` *(NEW)* · `log-setup` *(NEW)*
-
-### 🎲 Fun & Community (10 commands)
-`8ball` · `roll` · `rps` · `trivia` · `hack` · `emojify` · `joke` · `fact` · `quote` · `starboard-setup` *(NEW)*
-
-### ⚡ Advanced Operations (4 commands)
-`cyber-heist` · `giveaway` · `network-stats` · `shards`
-
-### 📸 Media (4 commands)
-`cat` · `dog` · `meme` · `urban`
-
-### 🔐 Owner-Only (8 commands, hidden)
-`shutdown` · `eval` · `set-credits` · `set-level` · `announce` · `blacklist` · `server-list` · `reload`
-
-## Security Architecture
-
-Nexus Protocol implements a multi-layered security system:
-
-| Layer | Protection |
-|-------|-----------|
-| **Blacklist Gate** | Severed operatives cannot execute any command |
-| **Guild-Only Lock** | Commands blocked in DMs |
-| **Owner Command Gate** | Root commands restricted to a single user ID |
-| **Cooldown Engine** | Per-command, per-user rate limiting (category-based) |
-| **Module Toggle** | Server admins can disable entire command categories |
-| **Anti-Spam & Anti-Link** | Message flooding & unauthorized link detection |
-| **Bad Word Filter** | Configurable per-server word blacklist |
-| **Audit Logging** | Granular tracking of edited/deleted transmissions |
-| **Permission Checks** | Role-based access for moderation commands |
-
-## Project Structure
-
-```
-nexus-protocol/
-├── src/
-│   ├── bot.js              # Client initialization
-│   ├── index.js             # Shard manager
-│   ├── commands/            # 66 slash commands
-│   ├── events/              # Event handlers (Starboard, Logs)
-│   ├── models/              # Mongoose schemas
-│   └── utils/               # Shared utilities
-│       ├── embed.js          # Embed builder
-│       ├── logger.js         # Console logger
-│       ├── ownerGate.js      # Owner ID verification
-│       ├── cooldownManager.js # Rate limiting
-│       ├── EconomyManager.js  # User data CRUD
-│       └── ShopManager.js     # Item catalog
-├── *.html                   # Companion website (9 pages)
-├── style.css                # Website styles
-├── script.js                # Website interactivity
-├── deploy-commands.js       # Slash command registration
-└── package.json
-```
-
-## Installation
+## Quick start
 
 ```bash
-# Clone the repository
 git clone https://github.com/watispro5212/shiny-giigles.git
 cd shiny-giigles
-
-# Install dependencies
 npm install
-
-# Configure environment
 cp .env.example .env
-# Edit .env with your credentials
+# Edit .env: TOKEN, DISCORD_CLIENT_ID, MONGODB_URI
+npm run deploy   # register global slash commands
+npm start        # shards + web server (PORT default 3000)
 ```
 
-### Environment Variables
+## Environment variables
 
-```env
-TOKEN=your_discord_bot_token
-CLIENT_ID=your_application_client_id
-MONGODB_URI=your_mongodb_connection_string
-GUILD_ID=your_dev_guild_id  # Optional, for faster development
+| Variable | Required | Purpose |
+|----------|----------|---------|
+| `TOKEN` | Yes | Discord bot token |
+| `MONGODB_URI` | Yes* | MongoDB connection string |
+| `DISCORD_CLIENT_ID` | Yes* | Application ID (slash deploy + `/invite`) |
+| `CLIENT_ID` | No | Alias for `DISCORD_CLIENT_ID` |
+| `GUILD_ID` | No | Dev-only fast command registration (see `deploy-commands.js`) |
+| `PORT` | No | HTTP port for site + API (default `3000`) |
+
+\*The process will start without MongoDB, but data-backed commands will fail until `MONGODB_URI` is set.
+
+## Scripts
+
+| Script | Command |
+|--------|---------|
+| Start bot + web | `npm start` |
+| Dev (nodemon) | `npm run dev` |
+| Deploy slash commands | `npm run deploy` |
+
+## Commands (high level)
+
+**67** registered slash commands (including **8** owner-only: `shutdown`, `eval`, `set-credits`, `set-level`, `announce`, `blacklist`, `server-list`, `reload`). Public surface **59** commands.
+
+| Area | Examples |
+|------|----------|
+| Utility | `ping`, **`invite`**, `help`, `info`, `profile`, `poll`, `remind`, … |
+| Economy | `balance`, `daily`, `work`, `rob`, `leaderboard`, `shop`, `quests`, … |
+| Casino | `blackjack`, `slots`, `coinflip` |
+| Leveling | `rank` |
+| Moderation | `ban`, `kick`, `warn`, `purge`, `ticket-setup`, `automod-setup`, `log-setup`, `starboard-setup`, … |
+| Fun / media | `8ball`, `trivia`, `meme`, `cat`, `urban`, … |
+| Advanced | `cyber-heist`, `giveaway`, `network-stats`, `shards` |
+
+Full lists: run `/help` in Discord or open **`commands.html`** on the site.
+
+## Web & API
+
+With `npm start`, static assets are served from the project root with **guards** against exposing `src/`, `node_modules/`, dotfiles, and `.env`.
+
+| Endpoint | Description |
+|----------|-------------|
+| `/` … `*.html` | Companion pages (home, commands, wiki, FAQ, dashboard, …) |
+| `GET /api/health` | `{ ok, service, version, uptime }` |
+| `GET /api/version` | Package metadata |
+| `GET /api/stats` | Guild/member/ping aggregates (requires running shard manager) |
+
+## Repository layout
+
+```
+├── src/
+│   ├── index.js           # ShardingManager + web bootstrap
+│   ├── bot.js             # Per-shard client, MongoDB, command/event load
+│   ├── commands/          # Slash command modules
+│   ├── events/            # Discord event handlers
+│   ├── models/            # Mongoose schemas
+│   ├── utils/             # Economy, embeds, cooldowns, etc.
+│   └── web/server.js      # Express static + API
+├── *.html, style.css, script.js   # Companion site
+├── deploy-commands.js
+├── package.json
+├── LICENSE                # BSL-Attribution
+└── SECURITY.md
 ```
 
-### Running
+## Companion site
 
-```bash
-# Production
-npm start
-
-# Development (hot-reload)
-npm run dev
-
-# Deploy slash commands
-node deploy-commands.js
-```
-
-## Companion Website
-
-The Nexus Protocol includes a full completely overhauled companion website with:
-- **Home** — Feature showcase with animated stats and live operations feed
-- **Commands** — Searchable, filterable command reference
-- **Wiki** — Technical glossary and system documentation
-- **Staff** — Team profiles (including precise Owner ID avatar injection)
-- **Premium** — Tier comparison
-- **Changelog** — Version history timeline
-- **Status** — Real-time shard diagnostics
-- **Privacy & Terms** — Legal documentation
+Pages include **Home**, **Commands**, **Wiki**, **FAQ**, **Staff**, **Premium**, **Features**, **Changelog**, **Status**, **Dashboard**, **Privacy**, and **Terms**. Live counters call `/api/stats` when the bot hosts the site on the same origin.
 
 ## Authors
 
-**watispro5212** (Lead Developer & Creator) · **watispro1**
+**watispro5212** · **watispro1**
 
 ## License
 
-This project is licensed under the [Nexus BSL](LICENSE) — see the LICENSE file for details.
+[Nexus Protocol License (BSL-Attribution)](LICENSE) — attribution required; commercial use needs written permission. See the license file for full terms.
+
+## Security
+
+See [SECURITY.md](SECURITY.md) for supported versions, reporting vulnerabilities, and hosting notes.

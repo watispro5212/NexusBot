@@ -63,6 +63,26 @@
                         <p style="margin-top: 1rem;"><span style="color: var(--primary);">> Step 2:</span> Authorize the Nexus Protocol for your sector with standard Administrator clearance.</p>
                         <p style="margin-top: 1rem;"><span style="color: var(--primary);">> Step 3:</span> Execute <span style="color: #00FF88;">/info</span> in your server to confirm active telemetry.</p>
                         <p style="margin-top: 1rem;"><span style="color: var(--primary);">> Step 4:</span> Use <span style="color: #00FF88;">/daily</span> to claim your first allocation of Nexus credits and start building your streak.</p>
+                        <p style="margin-top: 1rem;"><span style="color: var(--primary);">> Step 5:</span> Run <span style="color: #00FF88;">/invite</span> in a server to copy an OAuth link for adding Nexus elsewhere (requires <code>DISCORD_CLIENT_ID</code> on the host).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="terminal-container reveal" style="margin-top: 2rem; margin-bottom: 2rem;">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div class="terminal-label">HTTP INTERFACE // SELF-HOST</div>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-text">
+                        <p>When you start the shard manager, Express serves the companion site and JSON endpoints on <code>PORT</code> (default 3000).</p>
+                        <p style="margin-top: 0.75rem;"><span style="color: var(--primary);">GET</span> <code>/api/health</code> — liveness and version.</p>
+                        <p><span style="color: var(--primary);">GET</span> <code>/api/version</code> — package metadata.</p>
+                        <p><span style="color: var(--primary);">GET</span> <code>/api/stats</code> — guilds, members, ping (shard broadcast).</p>
                     </div>
                 </div>
             </div>

@@ -32,7 +32,7 @@ module.exports = {
                 { name: '👥 Entity Count', value: `\`${guild.memberCount}\``, inline: true },
                 { name: '📅 Creation Hash', value: `<t:${Math.floor(guild.createdTimestamp / 1000)}:R>`, inline: true }
             ],
-            footer: `Analysis requested by ${interaction.user.tag} | Nexus Core 2.0`
+            footer: `Analysis requested by ${interaction.user.tag} | Nexus v${packageJson.version}`
         });
 
         await interaction.reply({ embeds: [embed] });

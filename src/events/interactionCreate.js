@@ -28,16 +28,20 @@ const COOLDOWN_DURATIONS = {
     moderation: 3000,
     fun: 3000,
     utility: 2000,
+    media: 4000,
+    advanced: 10000,
     default: 3000
 };
 
 // Categorize commands for cooldown purposes
 const COMMAND_CATEGORIES = {
+    utility: ['ping', 'invite', 'info', 'serverinfo', 'userinfo', 'avatar', 'servericon', 'math', 'timer', 'remind', 'poll', 'translate', 'weather', 'profile', 'help'],
     economy: ['balance', 'daily', 'work', 'rob', 'transfer', 'leaderboard', 'shop', 'buy', 'inventory', 'quests'],
     casino: ['blackjack', 'slots', 'coinflip'],
     moderation: ['ban', 'kick', 'warn', 'purge', 'lock', 'unlock', 'slowmode', 'say', 'verify-setup', 'ticket-setup', 'automod-setup', 'log-setup', 'starboard-setup'],
     fun: ['8ball', 'roll', 'rps', 'trivia', 'hack', 'emojify', 'joke', 'fact', 'quote'],
     media: ['cat', 'dog', 'meme', 'urban'],
+    advanced: ['cyber-heist', 'giveaway', 'network-stats', 'shards'],
 };
 
 function getCooldownDuration(commandName) {
@@ -247,10 +251,10 @@ module.exports = {
         const config = await getCachedConfig(interaction.guild.id);
         
         if (config) {
-            const economyCmds = ['balance', 'daily', 'work', 'buy', 'inventory', 'shop', 'transfer', 'quests'];
-            const casinoCmds = ['blackjack', 'slots', 'coinflip', 'rob'];
+            const economyCmds = ['balance', 'daily', 'work', 'rob', 'buy', 'inventory', 'shop', 'transfer', 'quests', 'leaderboard'];
+            const casinoCmds = ['blackjack', 'slots', 'coinflip'];
             const funCmds = ['8ball', 'cat', 'dog', 'emojify', 'fact', 'hack', 'joke', 'meme', 'quote', 'roll', 'rps', 'say', 'trivia', 'urban'];
-            const levelingCmds = ['rank', 'leaderboard'];
+            const levelingCmds = ['rank'];
 
             if (!config.economyEnabled && economyCmds.includes(interaction.commandName)) {
                 return interaction.reply({ 

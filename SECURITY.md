@@ -1,58 +1,65 @@
 # Security Policy — Nexus Protocol
 
-## Supported Versions
+## Supported versions
 
-| Version | Status | Support |
-|---------|--------|---------|
-| 4.x     | ✅ Current | Full security patches |
-| 3.x     | ⚠️ Legacy  | Critical patches only |
-| < 3.0   | ❌ EOL     | No support |
+| Version | Status        | Support                          |
+|---------|---------------|----------------------------------|
+| **5.x** | Current       | Full security patches            |
+| 4.x     | Previous      | Critical fixes on a best-effort basis |
+| &lt; 4.0 | End of life  | No support                       |
 
-## Security Architecture
+## Scope
 
-Nexus Protocol implements the following security measures:
+This policy covers:
 
-### Bot-Level Security
-- **Owner Gate** — Root commands restricted to a single hardcoded user ID
-- **Blacklist System** — Severed operatives cannot use any bot functions
-- **Cooldown Engine** — Per-command, per-user rate limiting prevents abuse
-- **Guild-Only Lock** — All commands blocked in DMs
-- **Module Toggles** — Server admins can disable entire categories (economy, casino, fun, leveling)
-- **Anti-Spam & Anti-Link Detection** — Auto-moderation for message flooding and unauthorized URLs
-- **Audit Logging** — Tracks message deletions and edits globally protecting community transparency
-- **Starboard Sanitization** — Starboard cache mitigates spamming of starboard logs
-- **Bad Word Filter** — Configurable per-server word blacklist
-- **Error Isolation** — Double try-catch pattern prevents command crashes from killing the bot
-- **Memory Leak Prevention** — Automatic pruning of expired tracking data
-- **Input Validation** — Discord.js slash command option types enforce input constraints
+- The **Discord bot** (`src/`, sharding, commands, events)  
+- The **Express static + API layer** (`src/web/server.js`) that serves the HTML/CSS/JS site and JSON endpoints  
+- **Operational** issues (token leak, misconfigured permissions, insecure hosting)
 
-### Infrastructure Security
-- **Environment Variables** — Tokens and credentials stored in `.env`, never committed
-- **Sharded Architecture** — Isolated shard processes prevent cascade failures
-- **MongoDB Authentication** — Secure connection string with Atlas TLS
-- **Graceful Error Handling** — `unhandledRejection` and `uncaughtException` catches
+It does **not** cover Discord Ltd.’s platform security or your hosting provider’s infrastructure beyond configuration guidance below.
 
-## Reporting a Vulnerability
+## Security measures (summary)
 
-> ⚠️ **Do NOT open public GitHub issues for security vulnerabilities.**
+### Bot
+
+- Owner-only gate for destructive and eval-class commands  
+- Global blacklist before command execution  
+- Guild-only command execution (no DMs)  
+- Per-category cooldowns (including utility, media, and advanced command groups)  
+- Guild module toggles (economy, casino, fun, leveling) with corrected mapping: economy leaderboard and `/rob` respect economy; `/rank` respects leveling; casino games respect casino only  
+- Automod, audit logging, and starboard features with permission checks where applicable  
+
+### Web / API
+
+- Static files are served from the repository root only with **`dotfiles: 'deny'`** and middleware that blocks `src/`, `node_modules/`, `scripts/`, dot-paths, `.env`, and `package-lock.json` from being downloaded as static assets  
+- **`GET /api/health`** — lightweight liveness JSON (no shard broadcast)  
+- **`GET /api/version`** — package name, version, description  
+- **`GET /api/stats`** — aggregated guild/member/ping data via shard broadcast (same as the companion site’s live counters when the bot process hosts the site)
+
+**Recommendation:** In production, place a reverse proxy (nginx, Caddy, Cloudflare) in front of the Node process, enforce TLS, and restrict admin routes if you add any.
+
+### Secrets
+
+- Never commit `.env` or tokens  
+- Use `DISCORD_CLIENT_ID` (or `CLIENT_ID`) for deploy scripts and the `/invite` command  
+- Rotate a leaked bot token immediately in the Discord Developer Portal  
+
+## Reporting a vulnerability
+
+> **Do not** open a public GitHub issue for undisclosed security problems.
 
 1. Email **williamdelilah3@gmail.com** or **altericjohnson2@gmail.com** with:
-   - Clear description of the vulnerability
-   - Steps to reproduce (if possible)
-   - Affected files, versions, or logs
-   - Severity assessment (Critical / High / Medium / Low)
+   - Description and impact  
+   - Steps to reproduce (if safe to share)  
+   - Affected version / commit (if known)  
+   - Severity (Critical / High / Medium / Low)
 
-2. We will acknowledge your report within **48 hours**
+2. We aim to acknowledge within **48 hours** and share a remediation timeline within **7 days** when practical.
 
-3. We will provide a fix timeline within **7 days**
+3. Coordinated disclosure after a patch or mitigation is available.
 
-4. Public disclosure is coordinated after a patch is released
-
-## Security Contact
+## Contact
 
 **Email:** williamdelilah3@gmail.com, altericjohnson2@gmail.com  
-**Response SLA:** 48 hours
 
----
-
-*Thank you for helping keep the Nexus Protocol secure.*
+Thank you for helping keep Nexus Protocol and its operators safe.

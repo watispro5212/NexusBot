@@ -1,6 +1,7 @@
 const CATEGORIES = {
     utility: [
         { name: 'ping', desc: 'Checks the module connection and data latency' },
+        { name: 'invite', desc: 'Get a link to add Nexus to another server' },
         { name: 'info', desc: 'Access global terminal and bot classification data' },
         { name: 'serverinfo', desc: 'Scan parameters and data regarding the current node' },
         { name: 'userinfo', desc: 'Pull system file and data on a specific user' },
@@ -12,7 +13,8 @@ const CATEGORIES = {
         { name: 'remind', desc: 'Have the system keep tabs on something for you' },
         { name: 'translate', desc: 'Translate text across language protocols' },
         { name: 'weather', desc: 'Pull atmospheric data for a location' },
-        { name: 'profile', desc: 'View a comprehensive operative dossier' }
+        { name: 'profile', desc: 'View a comprehensive operative dossier' },
+        { name: 'help', desc: 'Open the interactive command directory matrix' }
     ],
     economy: [
         { name: 'balance', desc: 'Scan current credit reserves and net worth' },
