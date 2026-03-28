@@ -222,10 +222,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tabs
     if (tabContainer) {
         tabContainer.addEventListener('click', (e) => {
-            if (e.target && e.target.classList.contains('tab-btn')) {
-                activeCategory = e.target.dataset.category;
-                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
+            const btn = e.target.closest?.('.tab-btn');
+            if (btn && tabContainer.contains(btn)) {
+                activeCategory = btn.dataset.category;
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
                 renderCommands();
             }
         });
@@ -471,11 +472,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener('mouseover', (e) => {
-        const el = e.target.closest?.('a, button, .cmd-item, .card, .explore-card, .nav-item, .protocol-strip a, .scroll-to-top, .toggle-switch');
+        const el = e.target.closest?.('a, button:not(.tab-btn), .cmd-item, .card, .explore-card, .nav-item, .protocol-strip a, .scroll-to-top, .toggle-switch');
         if (el) document.body.classList.add('clickable-hover');
     });
     document.addEventListener('mouseout', (e) => {
-        const el = e.target.closest?.('a, button, .cmd-item, .card, .explore-card, .nav-item, .protocol-strip a, .scroll-to-top, .toggle-switch');
+        const el = e.target.closest?.('a, button:not(.tab-btn), .cmd-item, .card, .explore-card, .nav-item, .protocol-strip a, .scroll-to-top, .toggle-switch');
         const rel = e.relatedTarget;
         if (el && (!rel || !el.contains(rel))) {
             document.body.classList.remove('clickable-hover');
