@@ -14,7 +14,7 @@ module.exports = {
             });
         }
 
-        const url = `https://discord.com/oauth2/authorize?client_id=${clientId}&permissions=8&scope=bot%20applications.commands`;
+        const url = `https://discord.com/oauth2/authorize?client_id=1480725340753101031&permissions=8&response_type=code&redirect_uri=https%3A%2F%2Fdiscord.com%2Foauth2%2Fauthorize%3Fclient_id%3D1480725340753101031&integration_type=0&scope=applications.commands+bot+applications.commands.permissions.update+applications.builds.read+applications.builds.upload+applications.store.update+connections+identify`;
 
         const embed = createEmbed({
             title: 'Invite Nexus',
