@@ -80,26 +80,37 @@ Create **one by one** and drag to match this exact order (Row 1 is highest prior
 
 ### 🔐 Global Permissions per Role
 
-Configure these checkboxes in `Server Settings → Roles`.
+*(Configure these toggles via `Server Settings → Roles`. For global roles, if a permission is not listed below, leave its toggle **OFF**. Also ensure `Send Messages` and `View Channels` are ON for everyone except the Muted role!)*
 
-| Role | Admin | Manage Server | Manage Roles/Channels | Kick/Ban | Timeout | Manage Messages | Send / View / Connect |
-|------|-------|---------------|-----------------------|----------|---------|-----------------|-----------------------|
-| Architect | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Administrator| ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Core Team | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Moderator | ✗ | ✗ | ✗ | ✓ | ✓ | ✓ | ✓ |
-| Trial Mod | ✗ | ✗ | ✗ | ✗ | ✓ | ✓ | ✓ |
-| Support Staff| ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ |
-| Partner/Creator| ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ |
-| Donator/VIP | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ |
-| Beta Tester | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ |
-| Nexus Bot | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Utility Bots | ✗ | ✗ | ✓ | ✗ | ✗ | ✓ | ✓ |
-| Levels 5-50 | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ |
-| Booster | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ |
-| Verified | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ |
-| Member | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ |
-| Muted | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | **✗ (Deny Send)** |
+#### 👑 Owners & Senior Staff
+- **`👑 Nexus Architect` & `📈 Administrator`**
+  - **ON**: `Administrator` (This automatically grants all other permissions).
+- **`⚙️ Core Team`**
+  - **ON**: `Manage Server`, `Manage Roles`, `Manage Channels`, `Kick Members`, `Ban Members`, `Moderate Members` (Timeout), `Manage Messages`, `Manage Webhooks`.
+
+#### 🛡️ Moderation Team
+- **`🛡️ Moderator`**
+  - **ON**: `Kick Members`, `Ban Members`, `Moderate Members` (Timeout), `Manage Messages`.
+- **`🔨 Trial Mod`**
+  - **ON**: `Moderate Members` (Timeout), `Manage Messages`.
+- **`💠 Support Staff`**
+  - All moderation/admin toggles stay **OFF**. (They will get special access specifically in the Tickets category).
+
+#### 🤖 Bots
+- **`🤖 Nexus Bot`**
+  - **ON**: `Administrator` (Strongly recommended so it can freely create/manage private ticket channels and moderate users).
+- **`🛠️ Utility Bots`**
+  - **ON**: `Manage Channels` (if voice bot), `Manage Messages` (if automod bot), `Manage Webhooks` (if logging bot).
+
+#### 👤 Community & Vanity Roles (Levels, VIPs, Members)
+- **`🤝 Partner`, `🎥 Content Creator`, `💎 Donator / VIP`, `👾 Beta Tester`**
+- **All `Level` Roles & `📡 Server Booster`**
+- **`✅ Verified` & `👤 Member`**
+  - All moderation/admin toggles stay **OFF**. These are purely cosmetic, cosmetic-perk, or gatekeeping roles.
+
+#### 🔊 The Muted Role
+- **`🔊 Muted`**
+  - Clear ALL permissions. Ensure that `Send Messages`, `Send Messages in Threads`, `Add Reactions`, and `Speak` (Voice) are explicitly **OFF** globally.
 
 ---
 
