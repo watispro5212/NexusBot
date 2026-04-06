@@ -5,20 +5,35 @@ require('dotenv').config();
 
 const commands = [];
 const commandsPath = path.join(__dirname, 'src', 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
-for (const file of commandFiles) {
-    const filePath = path.join(commandsPath, file);
-    const command = require(filePath);
-    if ('data' in command && 'execute' in command) {
-        commands.push(command.data.toJSON());
-    } else {
-        console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+/**
+ * Recursively find all command files in the commands directory
+ * @param {string} dir - Current directory to scan
+ */
+const getCommands = (dir) => {
+    const files = fs.readdirSync(path.join(commandsPath, dir));
+    
+    for (const file of files) {
+        const filePath = path.join(commandsPath, dir, file);
+        const stat = fs.lstatSync(filePath);
+        
+        if (stat.isDirectory()) {
+            getCommands(path.join(dir, file));
+        } else if (file.endsWith('.js')) {
+            const command = require(filePath);
+            if ('data' in command && 'execute' in command) {
+                commands.push(command.data.toJSON());
+            } else {
+                console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+            }
+        }
     }
-}
+};
+
+getCommands('');
 
 if (!process.env.TOKEN) {
-    console.error('[FATAL] TOKEN is not set in the environment.');
+    console.error('[FATAL] NEXUS_TOKEN is not defined in the environment.');
     process.exit(1);
 }
 

@@ -10,6 +10,7 @@
     "deploy": "node deploy-commands.js"
   },
   "dependencies": {
+    "chalk": "^4.1.2",
     "cors": "^2.8.6",
     "discord.js": "^14.25.1",
     "dotenv": "^16.3.1",
