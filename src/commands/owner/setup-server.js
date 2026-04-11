@@ -8,87 +8,87 @@ const SUPPORT_GUILD_ID = '1492345037848186930';
 // ═══════════════════════════════════════════════════════════
 const ROLES = [
     {
-        name: '👑 Founder', color: '#00F5FF', hoist: true,
+        name: '👑 Founder', color: 0x00F5FF, hoist: true,
         permissions: ['Administrator']
     },
     {
-        name: '🌟 Co-Founder', color: '#7B2FFF', hoist: true,
+        name: '🌟 Co-Founder', color: 0x7B2FFF, hoist: true,
         permissions: ['Administrator']
     },
     {
-        name: '🛡️ Admin', color: '#FF4444', hoist: true,
+        name: '🛡️ Admin', color: 0xFF4444, hoist: true,
         permissions: ['ManageGuild', 'ManageRoles', 'ManageChannels', 'ManageWebhooks', 'KickMembers', 'BanMembers', 'ModerateMembers', 'ManageNicknames', 'MentionEveryone', 'ViewAuditLog', 'ManageEvents', 'ManageMessages', 'CreatePublicThreads', 'CreatePrivateThreads', 'ManageThreads', 'UseExternalEmojis']
     },
     {
-        name: '⚡ Head Moderator', color: '#FF6B35', hoist: true,
+        name: '⚡ Head Moderator', color: 0xFF6B35, hoist: true,
         permissions: ['KickMembers', 'BanMembers', 'ModerateMembers', 'ManageMessages', 'ManageNicknames', 'ViewAuditLog', 'MoveMembers', 'DeafenMembers', 'MuteMembers', 'CreatePublicThreads', 'CreatePrivateThreads', 'ManageThreads', 'MentionEveryone', 'UseExternalEmojis']
     },
     {
-        name: '💻 Developer', color: '#BB86FC', hoist: true,
+        name: '💻 Developer', color: 0xBB86FC, hoist: true,
         permissions: ['ManageWebhooks', 'UseApplicationCommands', 'EmbedLinks', 'AttachFiles', 'CreatePublicThreads', 'UseExternalEmojis', 'AddReactions']
     },
     {
-        name: '⚔️ Moderator', color: '#FFBD2E', hoist: true,
+        name: '⚔️ Moderator', color: 0xFFBD2E, hoist: true,
         permissions: ['ManageMessages', 'ManageNicknames', 'ModerateMembers', 'KickMembers', 'MoveMembers', 'MuteMembers', 'DeafenMembers', 'ViewAuditLog', 'CreatePublicThreads', 'ManageThreads', 'UseExternalEmojis', 'AddReactions']
     },
     {
-        name: '🎯 Support Lead', color: '#00CFFF', hoist: true,
+        name: '🎯 Support Lead', color: 0x00CFFF, hoist: true,
         permissions: ['ManageMessages', 'CreatePrivateThreads', 'ManageThreads', 'UseApplicationCommands', 'EmbedLinks', 'AttachFiles', 'AddReactions', 'UseExternalEmojis']
     },
     {
-        name: '🔧 Support', color: '#03DAC6', hoist: true,
+        name: '🔧 Support', color: 0x03DAC6, hoist: true,
         permissions: ['ManageMessages', 'CreatePrivateThreads', 'UseApplicationCommands', 'EmbedLinks', 'AttachFiles', 'AddReactions', 'UseExternalEmojis']
     },
     {
-        name: '📣 Community Manager', color: '#F9A825', hoist: true,
+        name: '📣 Community Manager', color: 0xF9A825, hoist: true,
         permissions: ['ManageEvents', 'CreatePublicThreads', 'MentionEveryone', 'ManageMessages', 'ManageWebhooks', 'EmbedLinks', 'AttachFiles', 'AddReactions', 'UseExternalEmojis']
     },
     {
-        name: '🌐 Partner', color: '#BD93F9', hoist: true,
+        name: '🌐 Partner', color: 0xBD93F9, hoist: true,
         permissions: ['EmbedLinks', 'AttachFiles', 'AddReactions', 'UseExternalEmojis', 'UseExternalStickers', 'CreatePublicThreads']
     },
     {
-        name: '💎 Server Booster', color: '#F47FFF', hoist: true,
+        name: '💎 Server Booster', color: 0xF47FFF, hoist: true,
         permissions: ['ChangeNickname', 'UseExternalEmojis', 'UseExternalStickers', 'PrioritySpeaker', 'EmbedLinks', 'AttachFiles', 'AddReactions', 'Stream']
     },
-    { name: '🏆 Event Winner', color: '#FFD700', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers'] },
-    { name: '🛠️ Contributor', color: '#50FA7B', hoist: false, permissions: ['EmbedLinks', 'AttachFiles', 'AddReactions', 'UseExternalEmojis', 'CreatePublicThreads'] },
-    { name: '🥇 Early Operative', color: '#FFB86C', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers', 'PrioritySpeaker'] },
-    { name: '🔥 Level 50+', color: '#FF4D4D', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers', 'PrioritySpeaker'] },
-    { name: '⭐ Level 25+', color: '#FFC107', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers'] },
-    { name: '🌱 Level 10+', color: '#69FF47', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers'] },
-    { name: '🎖️ Veteran', color: '#A0A0A0', hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers'] },
+    { name: '🏆 Event Winner', color: 0xFFD700, hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers'] },
+    { name: '🛠️ Contributor', color: 0x50FA7B, hoist: false, permissions: ['EmbedLinks', 'AttachFiles', 'AddReactions', 'UseExternalEmojis', 'CreatePublicThreads'] },
+    { name: '🥇 Early Operative', color: 0xFFB86C, hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers', 'PrioritySpeaker'] },
+    { name: '🔥 Level 50+', color: 0xFF4D4D, hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers', 'PrioritySpeaker'] },
+    { name: '⭐ Level 25+', color: 0xFFC107, hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers'] },
+    { name: '🌱 Level 10+', color: 0x69FF47, hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers'] },
+    { name: '🎖️ Veteran', color: 0xA0A0A0, hoist: false, permissions: ['AddReactions', 'UseExternalEmojis', 'UseExternalStickers'] },
     {
-        name: '🧬 Operative', color: '#F0F0F0', hoist: true,
+        name: '🧬 Operative', color: 0xF0F0F0, hoist: true,
         permissions: ['SendMessages', 'EmbedLinks', 'AttachFiles', 'AddReactions', 'UseApplicationCommands', 'Connect', 'Speak', 'Stream', 'UseVAD', 'ChangeNickname', 'ViewChannel']
     },
     {
-        name: '🌑 New Entity', color: '#606060', hoist: false,
+        name: '🌑 New Entity', color: 0x606060, hoist: false,
         permissions: ['ViewChannel', 'SendMessages', 'ReadMessageHistory']
     },
     {
-        name: '🤖 Neural Engine', color: '#50FA7B', hoist: false,
+        name: '🤖 Neural Engine', color: 0x50FA7B, hoist: false,
         permissions: ['ViewChannel', 'SendMessages', 'EmbedLinks', 'AttachFiles', 'ReadMessageHistory', 'AddReactions', 'UseExternalEmojis']
     },
     {
-        name: '🔇 Muted', color: '#333333', hoist: false,
+        name: '🔇 Muted', color: 0x333333, hoist: false,
         permissions: []
     },
 ];
 
 // Self-role / ping roles (no perms, created below main roles)
 const PING_ROLES = [
-    { name: 'Announcements', color: '#5865F2' },
-    { name: 'Events', color: '#5865F2' },
-    { name: 'Changelog', color: '#5865F2' },
-    { name: 'Bug Pings', color: '#5865F2' },
-    { name: 'Feature Pings', color: '#5865F2' },
-    { name: 'Giveaway Pings', color: '#5865F2' },
-    { name: 'Dev Interest', color: '#5865F2' },
-    { name: 'Design Interest', color: '#5865F2' },
-    { name: 'Beta Tester', color: '#5865F2' },
-    { name: 'Open to Partner', color: '#5865F2' },
-    { name: 'Gamer', color: '#5865F2' },
+    { name: 'Announcements', color: 0x5865F2 },
+    { name: 'Events', color: 0x5865F2 },
+    { name: 'Changelog', color: 0x5865F2 },
+    { name: 'Bug Pings', color: 0x5865F2 },
+    { name: 'Feature Pings', color: 0x5865F2 },
+    { name: 'Giveaway Pings', color: 0x5865F2 },
+    { name: 'Dev Interest', color: 0x5865F2 },
+    { name: 'Design Interest', color: 0x5865F2 },
+    { name: 'Beta Tester', color: 0x5865F2 },
+    { name: 'Open to Partner', color: 0x5865F2 },
+    { name: 'Gamer', color: 0x5865F2 },
 ];
 
 // ═══════════════════════════════════════════════════════════
@@ -288,7 +288,7 @@ const CATEGORIES = [
             { name: '🎵-lofi-study', type: ChannelType.GuildVoice },
             { name: '🎮-gaming-vc', type: ChannelType.GuildVoice },
             { name: '🔒-staff-voice', type: ChannelType.GuildVoice },
-            { name: '🔴-events-stage', type: ChannelType.GuildStageVoice },
+            { name: '🔴-events-stage', type: ChannelType.GuildVoice },
             { name: '💤-afk-lounge', type: ChannelType.GuildVoice },
         ]
     },
@@ -401,10 +401,10 @@ const OVERVIEW_EMBED = {
         '💻 **Development** — Follow the development process and contribute',
         '',
         '**Quick Links:**',
-        '🔗 [Web Portal](https://shiny-giigles.pages.dev/)',
+        '🔗 [Web Portal](https://watispro5212.github.io/NexusBot/index.html)',
         '📦 [GitHub](https://github.com/watispro5212/shiny-giigles)',
         '🤖 [Invite Nexus](https://discord.com/api/oauth2/authorize?client_id=1480725340753101031&permissions=8&scope=bot+applications.commands)',
-        '📖 [Commands](https://shiny-giigles.pages.dev/commands.html)',
+        '📖 [Commands](https://watispro5212.github.io/NexusBot/commands.html)',
         '',
         '*Start by reading the rules in <#📜-rules> and picking your roles in <#🎭-get-roles>.*',
     ].join('\n'),
@@ -420,12 +420,12 @@ const LINKS_EMBED = {
         '| Resource | Link |',
         '|---|---|',
         '| 🤖 **Bot Invite** | [Add Nexus to your server](https://discord.com/api/oauth2/authorize?client_id=1480725340753101031&permissions=8&scope=bot+applications.commands) |',
-        '| 🌐 **Web Portal** | [shiny-giigles.pages.dev](https://shiny-giigles.pages.dev/) |',
-        '| 📖 **Commands** | [Command Index](https://shiny-giigles.pages.dev/commands.html) |',
+        '| 🌐 **Web Portal** | [NexusBot Portal](https://watispro5212.github.io/NexusBot/index.html) |',
+        '| 📖 **Commands** | [Command Index](https://watispro5212.github.io/NexusBot/commands.html) |',
         '| 📦 **GitHub** | [watispro5212/shiny-giigles](https://github.com/watispro5212/shiny-giigles) |',
         '| 💬 **Support** | [discord.com/invite/DYXBEd2G8M](https://discord.com/invite/DYXBEd2G8M) |',
-        '| 📜 **Changelog** | [Changelog](https://shiny-giigles.pages.dev/changelog.html) |',
-        '| 📚 **Wiki** | [Wiki](https://shiny-giigles.pages.dev/wiki.html) |',
+        '| 📜 **Changelog** | [Changelog](https://watispro5212.github.io/NexusBot/changelog.html) |',
+        '| 📚 **Wiki** | [Wiki](https://watispro5212.github.io/NexusBot/wiki.html) |',
     ].join('\n'),
     color: 0x00F5FF,
 };
@@ -514,7 +514,7 @@ module.exports = {
                     );
                     const role = await guild.roles.create({
                         name: roleDef.name,
-                        colors: roleDef.color,
+                        color: roleDef.color,
                         hoist: roleDef.hoist,
                         permissions: permBits,
                         reason: 'Nexus Blueprint: Auto-generated role',
@@ -551,7 +551,7 @@ module.exports = {
                 try {
                     await guild.roles.create({
                         name: pr.name,
-                        colors: pr.color,
+                        color: pr.color,
                         hoist: false,
                         mentionable: true,
                         permissions: [],
