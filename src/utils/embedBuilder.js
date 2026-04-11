@@ -1,21 +1,16 @@
 const { EmbedBuilder } = require('discord.js');
 
-/**
- * NEXUS PROTOCOL v8.5 — SINGULARITY EMBED ARCHITECTURE
- * Standardizes high-fidelity responses with consistent technical branding.
- */
-module.exports = (options) => {
-    // Standard Singularity Palette
-    const THEME = {
-        PRIMARY: '#00F5FF',    // Cyan Glow
-        SECONDARY: '#7000FF',  // Purple Pulse
-        NEUTRAL: '#FFFFFF',    // Pure Signal
-        CRITICAL: '#FF4444',   // Alert Vector
-        SUCCESS: '#00FF88'     // Stable Node
-    };
+// Core theme for Nexus responses
+const theme = {
+    primary: '#00F5FF',
+    secondary: '#7000FF',
+    success: '#00FF88',
+    danger: '#FF4444'
+};
 
+module.exports = (options) => {
     const embed = new EmbedBuilder()
-        .setColor(options.color || THEME.PRIMARY)
+        .setColor(options.color || theme.primary)
         .setTimestamp();
 
     const trim = (str, max) => str && str.length > max ? str.slice(0, max - 3) + '...' : str;

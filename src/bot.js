@@ -21,19 +21,18 @@ client.cooldowns = new Collection();
 client.events = new Collection();
 client.owners = process.env.OWNER_IDS ? process.env.OWNER_IDS.split(',').map(id => id.trim()) : [];
 
-
-// MongoDB Connection — no deprecated options (Mongoose 8+/MongoDB Driver 6+ dropped them)
+// Connect to the database
 if (process.env.MONGODB_URI) {
     mongoose.connect(process.env.MONGODB_URI, {
         serverSelectionTimeoutMS: 12000,
         maxPoolSize: 10
     }).then(() => {
-        logger.success('Connected to MongoDB.');
+        logger.info('Database connection established');
     }).catch(err => {
-        logger.error('Failed to connect to MongoDB:', err);
+        logger.error('Failed to link database:', err);
     });
 } else {
-    logger.warn('MONGODB_URI not found in .env — persistence features disabled.');
+    logger.warn('Missing MONGODB_URI in config — persistence disabled');
 }
 
 // Load Handlers

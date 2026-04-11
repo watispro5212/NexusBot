@@ -26,23 +26,23 @@ module.exports = {
             const cleaned = evaled.replace(client.token, '[REDACTED TOKEN]');
 
             const resultEmbed = embedBuilder({
-                title: '⚡ Terminal Execution // Success',
+                title: 'Code Execution Success',
                 description: `\`\`\`js\n${cleaned.length > 2000 ? cleaned.slice(0, 1990) + '...' : cleaned}\n\`\`\``,
                 fields: [
-                    { name: '📥 Input', value: `\`\`\`js\n${code}\n\`\`\`` }
+                    { name: 'Input', value: `\`\`\`js\n${code}\n\`\`\`` }
                 ],
-                color: '#2ECC71'
+                color: '#00FF88'
             });
 
             await interaction.reply({ embeds: [resultEmbed], ephemeral: true });
         } catch (error) {
             const errEmbed = embedBuilder({
-                title: '⚠️ Terminal Execution // Fault',
+                title: 'Code Execution Failed',
                 description: `\`\`\`js\n${error.message}\n\`\`\``,
                 fields: [
-                    { name: '📥 Input', value: `\`\`\`js\n${code}\n\`\`\`` }
+                    { name: 'Input', value: `\`\`\`js\n${code}\n\`\`\`` }
                 ],
-                color: '#ED4245'
+                color: '#FF4444'
             });
 
             await interaction.reply({ embeds: [errEmbed], ephemeral: true });

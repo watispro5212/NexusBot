@@ -33,16 +33,13 @@ module.exports = {
         const buildHelpEmbed = (category = null) => {
             if (!category) {
                 return embedBuilder({
-                    title: '📖 Nexus Protocol — Command Hub',
-                    description: 'Welcome to the central command directory. Use the interaction menu below to explore specific protocol categories.\n\n' +
-                                 '**Active Modules:** ' + categories.map(c => `\`${c.toUpperCase()}\``).join(', ') + '\n' +
-                                 '**Interface:** Slash Commands (/) Only',
+                    title: 'Nexus Command Index',
+                    description: 'Explore the available command protocols using the menu below.\n\n' +
+                                 '**Active Systems:** ' + categories.map(c => `\`${c.toUpperCase()}\``).join(', '),
                     fields: [
-                        { name: '🌐 Integrated Dashboard', value: '[Access Web Portal](https://nexus-protocol.com)', inline: true },
-                        { name: '🛡️ Support Array', value: '[Join Support](https://discord.gg/nexus)', inline: true }
+                        { name: 'Support', value: '[Portal](https://discord.gg/nexus)', inline: true }
                     ],
-                    color: '#5865F2',
-                    footer: `Nexus Protocol v7 • Select a category to begin`
+                    footer: `Nexus v8.5 • Status: Optimal`
                 });
             }
 
@@ -54,10 +51,9 @@ module.exports = {
             }).join('\n\n');
 
             return embedBuilder({
-                title: `${emoji} ${category.toUpperCase()} Protocol Directory`,
-                description: `${categoryDescriptions[category] || 'List of commands for this module.'}\n\n${commands}`,
-                color: '#5865F2',
-                footer: `Nexus Protocol v7 • ${cmdFiles.length} Commands in ${category}`
+                title: `${category.toUpperCase()} Module`,
+                description: `${categoryDescriptions[category] || 'Commands for this system.'}\n\n${commands}`,
+                footer: `Nexus v8.5 • Total: ${cmdFiles.length}`
             });
         };
 

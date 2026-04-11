@@ -31,16 +31,15 @@ module.exports = {
 
         await interaction.reply({
             embeds: [embedBuilder({
-                title: `💳 ${target.displayName}'s Financial Report`,
+                title: `${target.displayName}'s Finances`,
                 fields: [
-                    { name: '💵 Wallet', value: `\`$${userData.balance.toLocaleString()}\``, inline: true },
-                    { name: '🏦 Bank', value: `\`$${userData.bank.toLocaleString()}\``, inline: true },
-                    { name: '💎 Net Worth', value: `\`$${netWorth.toLocaleString()}\``, inline: true },
-                    { name: '📊 Guild Rank', value: `\`#${rank}\``, inline: true },
-                    { name: '📈 Total Earned', value: `\`$${(userData.totalEarned || 0).toLocaleString()}\``, inline: true },
-                    { name: '🔥 Streak', value: `\`${userData.streak || 0} days\``, inline: true },
+                    { name: 'Wallet', value: `$${userData.balance.toLocaleString()}`, inline: true },
+                    { name: 'Bank Account', value: `$${userData.bank.toLocaleString()}`, inline: true },
+                    { name: 'Total Assets', value: `$${netWorth.toLocaleString()}`, inline: true },
+                    { name: 'Local Rank', value: `#${rank}`, inline: true },
+                    { name: 'Lifetime Earnings', value: `$${(userData.totalEarned || 0).toLocaleString()}`, inline: true },
+                    { name: 'Daily Streak', value: `${userData.streak || 0} days`, inline: true },
                 ],
-                color: '#2ECC71',
                 thumbnail: target.displayAvatarURL({ dynamic: true })
             })]
         });
