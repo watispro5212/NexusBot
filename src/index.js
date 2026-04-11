@@ -25,9 +25,6 @@ manager.on('shardCreate', shard => {
     });
 });
 
-// Initialize the portal server
-require('./web/server')(manager);
-
 manager.spawn().catch(error => {
     logger.error('Failed to spawn shards:', error);
 });
