@@ -6,6 +6,9 @@ const guildConfigSchema = new mongoose.Schema({
     logChannel: { type: String, default: null },
     autoRole: { type: String, default: null },
     levelingEnabled: { type: Boolean, default: false },
+    suggestionsChannel: { type: String, default: null },
+    starboardChannel: { type: String, default: null },
+    starboardThreshold: { type: Number, default: 5 },
     automod: {
         antiSpam: { type: Boolean, default: false },
         antiLink: { type: Boolean, default: false },

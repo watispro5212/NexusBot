@@ -2,9 +2,26 @@ const { Events } = require('discord.js');
 const User = require('../../models/User');
 const GuildConfig = require('../../models/GuildConfig');
 const embedBuilder = require('../../utils/embedBuilder');
+const { guildConfigCache } = require('../../utils/cache');
 
 const xpCooldowns = new Map();
 const spamTracker = new Map();
+
+/**
+ * Fetch GuildConfig with cache-first strategy
+ * @param {string} guildId
+ * @returns {Promise<Object|null>}
+ */
+async function getConfig(guildId) {
+    const cached = guildConfigCache.get(`guild:${guildId}`);
+    if (cached) return cached;
+
+    const config = await GuildConfig.findOne({ guildId });
+    if (config) {
+        guildConfigCache.set(`guild:${guildId}`, config);
+    }
+    return config;
+}
 
 module.exports = {
     name: Events.MessageCreate,
@@ -18,7 +35,7 @@ module.exports = {
         // AUTO-MODERATION PIPELINE
         // ═══════════════════════════════
         try {
-            const config = await GuildConfig.findOne({ guildId });
+            const config = await getConfig(guildId);
             if (config?.automod) {
                 // Anti-Spam Detection
                 if (config.automod.antiSpam) {
@@ -82,7 +99,7 @@ module.exports = {
         // XP / LEVELING SYSTEM
         // ═══════════════════════════════
         try {
-            const config = await GuildConfig.findOne({ guildId });
+            const config = await getConfig(guildId);
             if (!config?.levelingEnabled) return;
 
             const cooldownKey = `xp-${guildId}-${userId}`;

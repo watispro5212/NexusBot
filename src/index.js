@@ -34,13 +34,13 @@ manager.on('shardCreate', shard => {
 // Global spawn orchestration
 (async () => {
     try {
-        logger.info('Initializing Singularity Core Spawn Sequence...');
+        logger.info('Initializing Apex Core Spawn Sequence...');
         await manager.spawn({ 
             amount: 'auto', 
             delay: 5500, // Throttled to avoid Discord rate limits
             timeout: 60000 
         });
-        logger.success('All Shards Synced. Singularity is Live.');
+        logger.success('All Shards Synced. Apex Protocol is Live.');
     } catch (error) {
         logger.error('Critical Spawn Failure. Aborting Uplink:', error);
         process.exit(1);
