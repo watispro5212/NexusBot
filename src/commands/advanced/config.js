@@ -27,14 +27,15 @@ module.exports = {
         const value = interaction.options.getString('value');
 
         try {
+            // Use findOneAndUpdate with upsert to avoid the pre-save hook issues
             let config = await GuildConfig.findOne({ guildId: interaction.guild.id });
             if (!config) {
-                config = new GuildConfig({ guildId: interaction.guild.id });
+                config = await GuildConfig.create({ guildId: interaction.guild.id });
             }
 
             // ═══ VIEW ALL SETTINGS ═══
             if (setting === 'view') {
-                return interaction.reply({
+                return await interaction.reply({
                     embeds: [embedBuilder({
                         title: '⚙️ Guild Configuration',
                         description: `Settings for **${interaction.guild.name}**`,
@@ -44,9 +45,9 @@ module.exports = {
                             { name: '🎭 Auto-Role', value: config.autoRole ? `<@&${config.autoRole}>` : '`Not set`', inline: true },
                             { name: '📊 Leveling', value: config.levelingEnabled ? '`✅ Enabled`' : '`❌ Disabled`', inline: true },
                             { name: '📈 Level Channel', value: config.levelChannel ? `<#${config.levelChannel}>` : '`Not set`', inline: true },
-                            { name: '💡 Suggestions Channel', value: config.suggestionsChannel ? `<#${config.suggestionsChannel}>` : '`Not set`', inline: true },
-                            { name: '⭐ Starboard Channel', value: config.starboardChannel ? `<#${config.starboardChannel}>` : '`Not set`', inline: true },
-                            { name: '⭐ Starboard Threshold', value: `\`${config.starboardThreshold || 5} ⭐\``, inline: true },
+                            { name: '💡 Suggestions', value: config.suggestionsChannel ? `<#${config.suggestionsChannel}>` : '`Not set`', inline: true },
+                            { name: '⭐ Starboard', value: config.starboardChannel ? `<#${config.starboardChannel}>` : '`Not set`', inline: true },
+                            { name: '⭐ Threshold', value: `\`${config.starboardThreshold || 5} ⭐\``, inline: true },
                         ],
                         color: '#00F5FF'
                     })]
@@ -55,68 +56,20 @@ module.exports = {
 
             // ═══ REQUIRE VALUE ═══
             if (!value) {
-                return interaction.reply({
-                    embeds: [embedBuilder({ title: '⚠️ Missing Value', description: 'Please provide a value for this setting.\n\n**Examples:**\n• Channel settings: Mention a channel (`#channel`)\n• Auto-Role: Mention a role (`@role`)\n• Leveling: `on` or `off`\n• Starboard Threshold: A number (e.g. `5`)', color: '#FF4444' })],
+                return await interaction.reply({
+                    embeds: [embedBuilder({
+                        title: '⚠️ Missing Value',
+                        description: 'Please provide a value for this setting.\n\n**Examples:**\n• Channel: `#channel-name`\n• Role: `@role-name`\n• Toggle: `on` / `off`\n• Number: `5`',
+                        color: '#FF4444'
+                    })],
                     flags: [MessageFlags.Ephemeral]
                 });
             }
 
-            // ═══ HANDLE EACH SETTING ═══
-            switch (setting) {
-                case 'welcomeChannel':
-                case 'logChannel':
-                case 'levelChannel':
-                case 'suggestionsChannel':
-                case 'starboardChannel': {
-                    const channelId = value.replace(/[<#>]/g, '');
-                    const channel = interaction.guild.channels.cache.get(channelId);
-                    if (!channel || channel.type !== ChannelType.GuildText) {
-                        return interaction.reply({
-                            embeds: [embedBuilder({ title: '⚠️ Invalid Channel', description: 'Please mention a valid text channel (e.g. `#channel-name`).', color: '#FF4444' })],
-                            flags: [MessageFlags.Ephemeral]
-                        });
-                    }
-                    config[setting] = channelId;
-                    break;
-                }
-                case 'autoRole': {
-                    if (value.toLowerCase() === 'off' || value.toLowerCase() === 'none' || value.toLowerCase() === 'disable') {
-                        config.autoRole = null;
-                        break;
-                    }
-                    const roleId = value.replace(/[<@&>]/g, '');
-                    const role = interaction.guild.roles.cache.get(roleId);
-                    if (!role) {
-                        return interaction.reply({
-                            embeds: [embedBuilder({ title: '⚠️ Invalid Role', description: 'Please mention a valid role (e.g. `@role`).', color: '#FF4444' })],
-                            flags: [MessageFlags.Ephemeral]
-                        });
-                    }
-                    config.autoRole = roleId;
-                    break;
-                }
-                case 'leveling': {
-                    const enabled = ['on', 'true', 'enable', 'yes'].includes(value.toLowerCase());
-                    config.levelingEnabled = enabled;
-                    break;
-                }
-                case 'starboardThreshold': {
-                    const num = parseInt(value);
-                    if (isNaN(num) || num < 1 || num > 50) {
-                        return interaction.reply({
-                            embeds: [embedBuilder({ title: '⚠️ Invalid Number', description: 'Starboard threshold must be a number between 1 and 50.', color: '#FF4444' })],
-                            flags: [MessageFlags.Ephemeral]
-                        });
-                    }
-                    config.starboardThreshold = num;
-                    break;
-                }
-            }
+            // ═══ BUILD UPDATE OBJECT ═══
+            const update = {};
+            let displayValue = '';
 
-            await config.save();
-
-            // ═══ BUILD DISPLAY VALUE ═══
-            let displayValue;
             const settingLabels = {
                 welcomeChannel: '👋 Welcome Channel',
                 logChannel: '📋 Log Channel',
@@ -129,19 +82,97 @@ module.exports = {
             };
 
             switch (setting) {
-                case 'leveling':
-                    displayValue = config.levelingEnabled ? '`✅ Enabled`' : '`❌ Disabled`';
+                case 'welcomeChannel':
+                case 'logChannel':
+                case 'levelChannel':
+                case 'suggestionsChannel':
+                case 'starboardChannel': {
+                    // Support both channel mention and raw ID
+                    const channelId = value.replace(/[<#>]/g, '');
+                    const channel = interaction.guild.channels.cache.get(channelId);
+
+                    if (!channel) {
+                        return await interaction.reply({
+                            embeds: [embedBuilder({
+                                title: '⚠️ Invalid Channel',
+                                description: 'Please mention a valid text channel (e.g. `#general`).',
+                                color: '#FF4444'
+                            })],
+                            flags: [MessageFlags.Ephemeral]
+                        });
+                    }
+
+                    update[setting] = channelId;
+                    displayValue = `<#${channelId}>`;
                     break;
-                case 'autoRole':
-                    displayValue = config.autoRole ? `<@&${config.autoRole}>` : '`Disabled`';
+                }
+
+                case 'autoRole': {
+                    if (['off', 'none', 'disable', 'remove', 'reset'].includes(value.toLowerCase())) {
+                        update.autoRole = null;
+                        displayValue = '`Disabled`';
+                        break;
+                    }
+                    const roleId = value.replace(/[<@&>]/g, '');
+                    const role = interaction.guild.roles.cache.get(roleId);
+                    if (!role) {
+                        return await interaction.reply({
+                            embeds: [embedBuilder({
+                                title: '⚠️ Invalid Role',
+                                description: 'Please mention a valid role (e.g. `@Member`).',
+                                color: '#FF4444'
+                            })],
+                            flags: [MessageFlags.Ephemeral]
+                        });
+                    }
+                    update.autoRole = roleId;
+                    displayValue = `<@&${roleId}>`;
                     break;
-                case 'starboardThreshold':
-                    displayValue = `\`${config.starboardThreshold} ⭐\``;
+                }
+
+                case 'leveling': {
+                    const enabled = ['on', 'true', 'enable', 'yes', '1'].includes(value.toLowerCase());
+                    update.levelingEnabled = enabled;
+                    displayValue = enabled ? '`✅ Enabled`' : '`❌ Disabled`';
                     break;
-                default:
-                    displayValue = `<#${config[setting]}>`;
+                }
+
+                case 'starboardThreshold': {
+                    const num = parseInt(value);
+                    if (isNaN(num) || num < 1 || num > 50) {
+                        return await interaction.reply({
+                            embeds: [embedBuilder({
+                                title: '⚠️ Invalid Number',
+                                description: 'Starboard threshold must be a number between **1** and **50**.',
+                                color: '#FF4444'
+                            })],
+                            flags: [MessageFlags.Ephemeral]
+                        });
+                    }
+                    update.starboardThreshold = num;
+                    displayValue = `\`${num} ⭐\``;
                     break;
+                }
+
+                default: {
+                    return await interaction.reply({
+                        embeds: [embedBuilder({
+                            title: '⚠️ Unknown Setting',
+                            description: `Setting \`${setting}\` is not recognized.`,
+                            color: '#FF4444'
+                        })],
+                        flags: [MessageFlags.Ephemeral]
+                    });
+                }
             }
+
+            // ═══ SAVE VIA findOneAndUpdate (bypasses pre-save hook) ═══
+            update.updatedAt = new Date();
+            await GuildConfig.findOneAndUpdate(
+                { guildId: interaction.guild.id },
+                { $set: update },
+                { upsert: true, new: true }
+            );
 
             await interaction.reply({
                 embeds: [embedBuilder({
@@ -150,12 +181,28 @@ module.exports = {
                     color: '#00FF88'
                 })]
             });
+
         } catch (err) {
             console.error('[CONFIG ERROR]', err);
-            await interaction.reply({
-                embeds: [embedBuilder({ title: '⚠️ Error', description: 'Failed to update configuration.', color: '#FF4444' })],
+
+            const errResponse = {
+                embeds: [embedBuilder({
+                    title: '⚠️ Error',
+                    description: `Failed to update configuration.\n\`\`\`${err.message}\`\`\``,
+                    color: '#FF4444'
+                })],
                 flags: [MessageFlags.Ephemeral]
-            });
+            };
+
+            try {
+                if (interaction.replied || interaction.deferred) {
+                    await interaction.followUp(errResponse);
+                } else {
+                    await interaction.reply(errResponse);
+                }
+            } catch (e) {
+                console.error('[CONFIG REPLY ERROR]', e);
+            }
         }
     }
 };
